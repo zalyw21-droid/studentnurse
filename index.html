@@ -1,0 +1,2611 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b5e54">
+<meta name="description" content="A learning tool for UK student nurses on community public health placement. Reading, exercises and tests built around UK evidence and policy. Not a substitute for clinical judgement or local Trust policy.">
+<title>Placement Companion — Community Public Health for Student Nurses</title>
+<style>
+  :root {
+    --bg: #fbfaf7;
+    --surface: #ffffff;
+    --surface-2: #f1ede5;
+    --ink: #1a1f1d;
+    --ink-muted: #4a544f;
+    --line: #d8d3c7;
+    --brand: #0b5e54;
+    --brand-ink: #073f38;
+    --brand-soft: #e3eeec;
+    --warn: #8a3b00;
+    --warn-bg: #fff1e0;
+    --warn-line: #f3c79b;
+    --danger: #8b0a1a;
+    --danger-bg: #fde7ea;
+    --danger-line: #f0a9b1;
+    --ok: #1f6b3a;
+    --ok-bg: #e7f3ec;
+    --info: #114a8a;
+    --info-bg: #e3edf8;
+    --focus: #ffb000;
+    --radius: 10px;
+    --shadow: 0 1px 2px rgba(20,24,22,.06), 0 4px 14px rgba(20,24,22,.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #11161a;
+      --surface: #181d22;
+      --surface-2: #1f262c;
+      --ink: #ecefe9;
+      --ink-muted: #a9b1ad;
+      --line: #2c343b;
+      --brand: #5fbfb1;
+      --brand-ink: #b8e3dc;
+      --brand-soft: #14302d;
+      --warn: #f3a96b;
+      --warn-bg: #2a1c0e;
+      --warn-line: #6b3f1a;
+      --danger: #ff8a96;
+      --danger-bg: #2a0f13;
+      --danger-line: #6b1c25;
+      --ok: #6fcf8a;
+      --ok-bg: #102619;
+      --info: #7fb9ff;
+      --info-bg: #0f1f33;
+      --focus: #ffce4d;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+  a { color: var(--brand-ink); text-decoration: underline; text-underline-offset: 2px; }
+  @media (prefers-color-scheme: dark) { a { color: var(--brand); } }
+  a:focus, button:focus, input:focus, summary:focus, [tabindex]:focus, textarea:focus, select:focus {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+  h1, h2, h3, h4 { line-height: 1.25; margin: 0 0 .4em; color: var(--ink); }
+  h1 { font-size: 1.55rem; }
+  h2 { font-size: 1.25rem; margin-top: 1.5em; }
+  h3 { font-size: 1.05rem; margin-top: 1.2em; }
+  h4 { font-size: 1rem; margin-top: 1em; }
+  p, ul, ol { margin: 0 0 .8em; }
+  ul, ol { padding-left: 1.2em; }
+  li { margin-bottom: .25em; }
+  small, .small { font-size: .85rem; color: var(--ink-muted); }
+  code, kbd { font: .9em ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background: var(--surface-2); padding: 1px 5px; border-radius: 4px; }
+  blockquote { margin: .8em 0; padding: 8px 14px; border-left: 4px solid var(--brand); background: var(--brand-soft); color: var(--ink); font-style: italic; border-radius: 0 8px 8px 0; }
+  blockquote p:last-child { margin-bottom: 0; }
+  hr { border: 0; border-top: 1px solid var(--line); margin: 1.4em 0; }
+
+  /* Layout */
+  .app { max-width: 760px; margin: 0 auto; padding: 0 16px 96px; }
+  header.top {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+    margin: 0 -16px 12px;
+    padding: 10px 16px;
+  }
+  .top-row { display: flex; align-items: center; gap: 10px; }
+  .brand-mark {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-weight: 700; color: var(--brand-ink); text-decoration: none;
+  }
+  .brand-mark svg { width: 22px; height: 22px; }
+  .brand-mark span { font-size: 1rem; }
+  .menu-btn {
+    margin-left: auto;
+    appearance: none; border: 1px solid var(--line); background: var(--surface);
+    color: var(--ink); padding: 8px 12px; border-radius: var(--radius); font-weight: 600;
+    min-height: 44px; min-width: 44px;
+  }
+  nav.primary {
+    display: none;
+    border-top: 1px solid var(--line);
+    margin: 10px -16px 0;
+    padding: 8px 16px 4px;
+  }
+  nav.primary.open { display: block; }
+  nav.primary a {
+    display: block; padding: 12px 8px; border-radius: 8px;
+    color: var(--ink); text-decoration: none; font-weight: 600;
+    border-bottom: 1px solid var(--line);
+  }
+  nav.primary a:last-child { border-bottom: 0; }
+  nav.primary a.danger { color: var(--danger); }
+  nav.primary a[aria-current="page"] {
+    background: var(--brand-soft); color: var(--brand-ink);
+  }
+  @media (min-width: 760px) {
+    .menu-btn { display: none; }
+    nav.primary { display: flex; flex-wrap: wrap; gap: 4px; border-top: 0; padding: 0; margin: 0 0 0 auto; }
+    nav.primary a { border-bottom: 0; padding: 8px 10px; font-size: .95rem; }
+  }
+
+  /* Search */
+  .search { margin-top: 10px; display: flex; gap: 8px; }
+  .search input {
+    flex: 1; min-height: 44px;
+    border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+    border-radius: var(--radius); padding: 10px 12px; font-size: 1rem;
+  }
+  .search input::placeholder { color: var(--ink-muted); }
+  #search-results { margin-top: 10px; }
+  #search-results .hit {
+    display: block; padding: 12px; border: 1px solid var(--line);
+    border-radius: var(--radius); margin-bottom: 8px; background: var(--surface);
+    text-decoration: none; color: var(--ink);
+  }
+  #search-results .hit b { color: var(--brand-ink); }
+  #search-results em { background: var(--brand-soft); font-style: normal; padding: 0 2px; border-radius: 3px; }
+
+  /* Cards / sections */
+  section.page { display: none; padding: 6px 0 24px; }
+  section.page.active { display: block; }
+  .card {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 14px 16px; margin: 12px 0;
+    box-shadow: var(--shadow);
+  }
+  .tile-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+  .tile {
+    display: block; padding: 14px; border-radius: var(--radius);
+    border: 1px solid var(--line); background: var(--surface);
+    text-decoration: none; color: var(--ink); min-height: 88px; position: relative;
+  }
+  .tile strong { display: block; font-size: 1rem; color: var(--brand-ink); }
+  .tile small { display: block; margin-top: 4px; }
+  .tile .badge {
+    position: absolute; top: 8px; right: 8px;
+    font-size: .7rem; padding: 2px 8px; border-radius: 999px;
+    background: var(--surface-2); color: var(--ink-muted); border: 1px solid var(--line);
+  }
+  .tile .badge.full { background: var(--ok-bg); color: var(--ok); border-color: var(--ok); }
+  .tile .badge.partial { background: var(--warn-bg); color: var(--warn); border-color: var(--warn-line); }
+
+  /* Callouts */
+  .callout { border-left: 4px solid var(--brand); background: var(--brand-soft); padding: 12px 14px; border-radius: 8px; margin: 10px 0; }
+  .callout.warn { border-color: var(--warn); background: var(--warn-bg); }
+  .callout.danger { border-color: var(--danger); background: var(--danger-bg); }
+  .callout.ok { border-color: var(--ok); background: var(--ok-bg); }
+  .callout.info { border-color: var(--info); background: var(--info-bg); }
+  .callout h4 { margin: 0 0 6px; font-size: 1rem; }
+  .callout p:last-child { margin-bottom: 0; }
+
+  /* Risk banner — visually loud */
+  .risk-banner {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--danger-bg); border: 1px solid var(--danger-line);
+    color: var(--danger); padding: 12px 14px; border-radius: var(--radius);
+    margin: 10px 0; text-decoration: none; font-weight: 600;
+  }
+  .risk-banner svg { width: 22px; height: 22px; flex-shrink: 0; }
+
+  /* Topic head + objectives */
+  .topic-head { display: flex; flex-direction: column; gap: 4px; margin-bottom: 6px; }
+  .topic-head .crumb { font-size: .85rem; color: var(--ink-muted); }
+  .topic-head h1 { margin-bottom: 0; }
+
+  /* Citation chips */
+  .src { display: inline-block; font-size: .78rem; padding: 1px 6px; border-radius: 999px;
+         background: var(--surface-2); border: 1px solid var(--line); color: var(--ink-muted);
+         margin-left: 4px; vertical-align: middle; white-space: nowrap; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: .96rem; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { background: var(--surface-2); font-weight: 600; }
+
+  /* Module tabs */
+  .stages {
+    display: flex; gap: 4px; overflow-x: auto;
+    margin: 10px -16px; padding: 0 16px 4px;
+    border-bottom: 1px solid var(--line);
+    -webkit-overflow-scrolling: touch;
+  }
+  .stage-btn {
+    appearance: none; border: 0; background: transparent;
+    padding: 10px 12px; min-height: 44px;
+    color: var(--ink-muted); font-weight: 600; font-size: .95rem;
+    cursor: pointer; border-bottom: 3px solid transparent;
+    white-space: nowrap; display: flex; align-items: center; gap: 6px;
+  }
+  .stage-btn[aria-selected="true"] { color: var(--brand-ink); border-color: var(--brand); }
+  .stage-btn .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line); display: inline-block; }
+  .stage-btn[data-done="true"] .dot { background: var(--ok); }
+  .stage-panel { display: none; }
+  .stage-panel.active { display: block; }
+
+  /* Module progress strip */
+  .progress {
+    display: flex; gap: 6px; align-items: center; margin: 8px 0 4px;
+    font-size: .85rem; color: var(--ink-muted);
+  }
+  .progress-bar {
+    flex: 1; height: 8px; background: var(--surface-2);
+    border-radius: 999px; overflow: hidden; border: 1px solid var(--line);
+  }
+  .progress-bar > span {
+    display: block; height: 100%; background: var(--brand); border-radius: 999px;
+    transition: width .3s ease;
+  }
+
+  /* Objective list */
+  .objectives { background: var(--brand-soft); border-radius: 8px; padding: 12px 16px; margin: 8px 0 14px; }
+  .objectives h3 { margin-top: 0; color: var(--brand-ink); }
+  .objectives ol { margin-bottom: 0; }
+
+  /* Lists with checks */
+  .check li { list-style: none; position: relative; padding-left: 26px; }
+  .check li::before {
+    content: ""; position: absolute; left: 0; top: .35em;
+    width: 16px; height: 16px; border-radius: 4px;
+    border: 1.5px solid var(--brand); background: var(--surface);
+  }
+
+  /* Disclaimer footer */
+  footer.disclaimer {
+    margin-top: 24px; padding: 14px;
+    border-top: 1px solid var(--line);
+    font-size: .85rem; color: var(--ink-muted);
+  }
+  footer.disclaimer strong { color: var(--ink); }
+
+  /* Buttons */
+  .btn {
+    display: inline-block; padding: 10px 14px; border-radius: var(--radius);
+    background: var(--brand); color: #fff; text-decoration: none; font-weight: 600;
+    border: 1px solid var(--brand-ink); min-height: 44px; line-height: 1.2;
+    cursor: pointer; font-size: 1rem;
+  }
+  .btn.secondary { background: var(--surface); color: var(--ink); border-color: var(--line); }
+  .btn.danger { background: var(--danger); border-color: var(--danger); color: #fff; }
+  .btn.ok { background: var(--ok); border-color: var(--ok); color: #fff; }
+  .btn:disabled { opacity: .55; cursor: not-allowed; }
+  .btn-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+
+  /* Inputs */
+  textarea, input[type="text"] { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; }
+  textarea { min-height: 90px; }
+  label { display: block; font-weight: 600; margin-top: 10px; }
+
+  /* Print */
+  @media print {
+    nav.primary, header.top .menu-btn, .search, .btn, .stages { display: none !important; }
+    section.page { display: block !important; page-break-after: always; }
+    .stage-panel { display: block !important; }
+    #feedback, #flashcards, .report-link, textarea, input[type="text"], .quiz-summary, #clear-local-data-status { display: none !important; }
+    a { color: #000; }
+  }
+
+  /* Skip link */
+  .skip {
+    position: absolute; left: -9999px; top: 0;
+    background: var(--ink); color: var(--bg);
+    padding: 8px 12px; border-radius: 0 0 8px 0; z-index: 100;
+  }
+  .skip:focus { left: 0; }
+
+  /* MCQ */
+  .mcq { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 14px; margin: 10px 0; }
+  .mcq .stem { font-weight: 600; margin-bottom: 8px; }
+  .mcq .options { list-style: none; padding: 0; margin: 0 0 8px; }
+  .mcq .options li { margin: 6px 0; }
+  .mcq .opt {
+    display: block; width: 100%; text-align: left; padding: 10px 12px;
+    border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+    border-radius: 8px; cursor: pointer; font: inherit;
+  }
+  .mcq .opt:hover { background: var(--surface-2); }
+  .mcq .opt.chosen { border-color: var(--brand-ink); background: var(--brand-soft); }
+  .mcq.answered .opt { cursor: default; }
+  .mcq.answered .opt[data-correct="true"] { border-color: var(--ok); background: var(--ok-bg); }
+  .mcq.answered .opt[data-correct="false"].chosen { border-color: var(--danger); background: var(--danger-bg); }
+  .mcq .rationale { display: none; padding: 10px 12px; margin-top: 8px; border-radius: 8px; background: var(--surface-2); font-size: .92rem; }
+  .mcq.answered .rationale { display: block; }
+  .mcq .rationale strong { color: var(--brand-ink); }
+
+  /* Quiz summary */
+  .quiz-summary { margin-top: 14px; padding: 14px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+  .quiz-summary .score { font-size: 1.6rem; font-weight: 700; color: var(--brand-ink); }
+
+  /* Sortable exercise */
+  .sort-grid { display: grid; gap: 8px; grid-template-columns: 1fr; margin: 10px 0; }
+  @media (min-width: 600px) { .sort-grid { grid-template-columns: 1fr 1fr; } }
+  .sort-item, .sort-bin {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px;
+  }
+  .sort-bin { background: var(--surface-2); min-height: 64px; }
+  .sort-bin h4 { margin: 0 0 6px; font-size: .95rem; color: var(--brand-ink); }
+  .sort-pool { margin-top: 6px; }
+  .sort-pool .sort-item { margin-bottom: 6px; cursor: pointer; }
+  .sort-item .pick { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+  .sort-item button.pick-bin { font-size: .85rem; padding: 6px 10px; min-height: 36px; }
+  .sort-item.correct { border-color: var(--ok); background: var(--ok-bg); }
+  .sort-item.wrong { border-color: var(--danger); background: var(--danger-bg); }
+  .sort-item .feedback { display: none; font-size: .9rem; margin-top: 6px; }
+  .sort-item.correct .feedback, .sort-item.wrong .feedback { display: block; }
+
+  /* Rephrase exercise */
+  .rephrase { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 14px; margin: 10px 0; }
+  .rephrase .original { font-style: italic; color: var(--ink-muted); margin-bottom: 6px; }
+  .rephrase .model { display: none; margin-top: 8px; padding: 10px; background: var(--ok-bg); border-radius: 8px; font-size: .92rem; }
+  .rephrase.revealed .model { display: block; }
+
+  /* Branching scenario */
+  .scenario { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; margin: 10px 0; }
+  .scenario .vignette { font-style: italic; padding: 10px; border-left: 3px solid var(--brand); background: var(--brand-soft); border-radius: 0 8px 8px 0; margin-bottom: 10px; }
+  .scenario .step { margin-top: 12px; }
+  .scenario .step h4 { margin-top: 0; }
+  .scenario .choice { display: block; width: 100%; text-align: left; padding: 10px 12px; margin: 6px 0; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; color: var(--ink); cursor: pointer; font: inherit; }
+  .scenario .choice:hover { background: var(--surface-2); }
+  .scenario .choice.preferred { border-color: var(--ok); background: var(--ok-bg); }
+  .scenario .choice.suboptimal { border-color: var(--warn-line); background: var(--warn-bg); }
+  .scenario .choice.poor { border-color: var(--danger-line); background: var(--danger-bg); }
+  .scenario .feedback { margin-top: 8px; padding: 10px; border-radius: 8px; background: var(--surface-2); font-size: .92rem; }
+  .scenario .step.locked .choice:not(.chosen) { opacity: .55; cursor: default; pointer-events: none; }
+  .scenario .step.locked .choice.chosen { font-weight: 600; }
+  .scenario .step.hidden { display: none; }
+
+  /* Flashcards */
+  .flashcard {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 18px; margin: 10px 0; min-height: 140px; cursor: pointer;
+  }
+  .flashcard .front, .flashcard .back { font-size: 1.05rem; }
+  .flashcard .back { display: none; padding-top: 10px; margin-top: 10px; border-top: 1px solid var(--line); }
+  .flashcard.flipped .back { display: block; }
+  .fc-controls { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .fc-controls .btn { flex: 1; min-width: 90px; }
+
+  /* Acknowledgement pill */
+  .ack-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 10px; font-size: .85rem; border-radius: 999px;
+    border: 1px solid var(--line); color: var(--ink-muted);
+  }
+  .ack-pill.done { background: var(--ok-bg); color: var(--ok); border-color: var(--ok); }
+
+  /* Stage navigation footer */
+  .stage-foot { display: flex; justify-content: space-between; gap: 8px; margin: 18px 0 6px; }
+  .stage-foot .btn { flex: 1; max-width: 220px; }
+</style>
+</head>
+<body>
+<a href="#home" class="skip">Skip to content</a>
+<div class="app">
+
+<header class="top">
+  <div class="top-row">
+    <a href="#home" class="brand-mark" data-nav>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 2v6"/><path d="M12 14v8"/><path d="M5 8h14a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2z"/>
+      </svg>
+      <span>Placement Companion</span>
+    </a>
+    <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="primary-nav">Menu</button>
+  </div>
+  <nav class="primary" id="primary-nav" aria-label="Primary">
+    <a href="#home" data-nav>Home</a>
+    <a href="#toolkit" data-nav>Behaviour change</a>
+    <a href="#smoking" data-nav>Smoking</a>
+    <a href="#falls" data-nav>Falls</a>
+    <a href="#weight" data-nav>Healthy weight</a>
+    <a href="#mental-health" data-nav>Mental health</a>
+    <a href="#risk" class="danger" data-nav>Risk &amp; escalation</a>
+    <a href="#flashcards" data-nav>Flashcards</a>
+    <a href="#sources" data-nav>Sources</a>
+  </nav>
+  <div class="search">
+    <input type="search" id="q" placeholder="Search e.g. MECC, OARS, NRT, COM-B, AUDIT, sustain talk..." aria-label="Search">
+  </div>
+  <div id="search-results" hidden></div>
+</header>
+
+<main id="main">
+
+<!-- HOME -->
+<section class="page" id="home">
+  <h1>Placement Companion</h1>
+  <p class="small">For UK student nurses on community public health placement. Reading, exercises and tests built around UK evidence and policy. Use it during downtime — not at the point of care to make a clinical decision.</p>
+
+  <a href="#risk" class="risk-banner" data-nav aria-label="Read the risk and escalation page">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+    <span>Read this first: Risk &amp; escalation — what to do <em>right now</em> if a client discloses suicidal thoughts, abuse, or capacity concerns.</span>
+  </a>
+
+  <h2>Your progress</h2>
+  <div id="dashboard" class="card">
+    <p class="small" style="margin:0">Loading…</p>
+  </div>
+
+  <h2>Device controls</h2>
+  <div class="card">
+    <p class="small">Use these before handing the device to a new student.</p>
+    <div class="btn-row">
+      <button class="btn danger" id="clear-local-data-home" type="button">Reset all learner progress on this device</button>
+      <button class="btn secondary" id="print-workbook-home" type="button">Open print-friendly workbook</button>
+    </div>
+    <p class="small">This resets saved quiz scores, reflections, flashcards, progress and summary review marks in this browser.</p>
+  </div>
+
+  <h2>Learning modules</h2>
+  <p>Each module follows the same five stages: <strong>Objectives → Read → Apply → Test → Reflect</strong>. Behaviour change is the spine — do this first. Topics apply the spine to a specific area.</p>
+  <div class="tile-grid">
+    <a class="tile" href="#toolkit" data-nav><strong>1. Behaviour change toolkit</strong><small>The spine: MECC, MI, COM-B, Stages of Change</small><span class="badge" data-mod-badge="toolkit">Module</span></a>
+    <a class="tile" href="#smoking" data-nav><strong>2. Smoking cessation</strong><small>NICE NG209 · OHID · NCSCT</small><span class="badge" data-mod-badge="smoking">Module</span></a>
+    <a class="tile" href="#falls" data-nav><strong>3. Falls prevention</strong><small>NICE CG161 · summary only</small><span class="badge partial" data-summary-badge="falls">Summary</span></a>
+    <a class="tile" href="#weight" data-nav><strong>4. Healthy weight</strong><small>NICE CG189 · summary only</small><span class="badge partial" data-summary-badge="weight">Summary</span></a>
+    <a class="tile" href="#mental-health" data-nav><strong>5. Mental health</strong><small>NICE NG222/NG225 · summary only</small><span class="badge partial" data-summary-badge="mental-health">Summary</span></a>
+  </div>
+
+  <h2>Use it on placement</h2>
+  <div class="tile-grid">
+    <a class="tile" href="#flashcards" data-nav><strong>Flashcards</strong><small>Spaced retrieval, 5 mins between visits</small></a>
+    <a class="tile" href="#sources" data-nav><strong>Sources &amp; disclaimer</strong><small>What I cite and why</small></a>
+  </div>
+
+  <div class="callout warn" role="note" style="margin-top:14px">
+    <h4>What this is not</h4>
+    <p>This is a study aid for placement <em>downtime</em>. It does not replace your university teaching, your local Trust/Service policies, the NMC Code, or your practice supervisor / assessor. Where local policy disagrees with anything here, follow local policy.</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- BEHAVIOUR CHANGE TOOLKIT — FULL MODULE                       -->
+<!-- ============================================================ -->
+<section class="page" id="toolkit" data-module="toolkit">
+  <div class="topic-head"><span class="crumb">Module 1 — the spine</span><h1>Behaviour change toolkit</h1></div>
+
+  <div class="progress" aria-label="Module progress">
+    <span>Progress</span>
+    <div class="progress-bar"><span data-mod-progress="toolkit" style="width:0%"></span></div>
+    <span data-mod-pct="toolkit">0%</span>
+  </div>
+
+  <div class="stages" role="tablist" aria-label="Module stages">
+    <button class="stage-btn" role="tab" data-stage="obj" aria-selected="true"><span class="dot" data-mod-dot="toolkit:obj"></span>Objectives</button>
+    <button class="stage-btn" role="tab" data-stage="read" aria-selected="false"><span class="dot" data-mod-dot="toolkit:read"></span>Read</button>
+    <button class="stage-btn" role="tab" data-stage="apply" aria-selected="false"><span class="dot" data-mod-dot="toolkit:apply"></span>Apply</button>
+    <button class="stage-btn" role="tab" data-stage="test" aria-selected="false"><span class="dot" data-mod-dot="toolkit:test"></span>Test</button>
+    <button class="stage-btn" role="tab" data-stage="reflect" aria-selected="false"><span class="dot" data-mod-dot="toolkit:reflect"></span>Reflect</button>
+  </div>
+
+  <!-- OBJECTIVES -->
+  <div class="stage-panel active" data-stage-panel="obj">
+    <div class="objectives">
+      <h3>By the end of this module you will be able to</h3>
+      <ol>
+        <li>Deliver Very Brief Advice on any health behaviour in under 60 seconds.</li>
+        <li>Recognise and use the four OARS micro-skills of motivational interviewing.</li>
+        <li>Apply the COM-B model to identify why a behaviour is or isn't happening.</li>
+        <li>Match an intervention to a person's stage of change.</li>
+        <li>Frame a behaviour-change conversation through a health-inequalities lens.</li>
+      </ol>
+    </div>
+    <p>Most of what community public health nurses do is help people decide to change something — and then support them through it. The four headline topics on this site (smoking, weight, falls, mental health) are different applications of the <em>same</em> small set of frameworks. Learn the engine once and the topics get easier.</p>
+    <p>Plan to spend <strong>about 25 minutes</strong> on the Read stage, plus shorter sessions on Apply and Test. You can pause and come back — your progress is saved on this device.</p>
+    <div class="stage-foot">
+      <button class="btn secondary" data-stage-prev disabled>Back</button>
+      <button class="btn" data-stage-complete="obj">I've read the objectives</button>
+    </div>
+  </div>
+
+  <!-- READ -->
+  <div class="stage-panel" data-stage-panel="read">
+
+    <h2>1. MECC — Making Every Contact Count <span class="src">OHID</span></h2>
+    <p><strong>MECC</strong> is the NHS / Office for Health Improvement &amp; Disparities approach: every routine contact (a dressing change, a blood pressure check, a school visit) is an opportunity for a brief, opportunistic conversation about health behaviour. It is <em>not</em> a lecture. It is not a long intervention. It is not pushing leaflets. It's a 30–60-second open door, offered every time, by everyone.</p>
+
+    <p>The principle behind MECC is simple but counter-intuitive: small, repeated nudges from people the public trusts (nurses, midwives, allied health professionals) accumulate. One conversation is unlikely to change behaviour; conversations across many contacts shift population norms. Because community PH nurses have multiple contacts with the same families and clients, you are particularly well placed to deliver MECC well.</p>
+
+    <h3>Very Brief Advice — the 30-second template</h3>
+    <p>The classic three-step structure was developed for smoking cessation and is now used across topics:</p>
+    <ol>
+      <li><strong>Ask</strong> — establish and record the behaviour. "Do you smoke?" / "How are you sleeping?" / "Do you drink alcohol?"</li>
+      <li><strong>Advise</strong> — the most effective evidence-based route. "The best way to quit is with a combination of behavioural support and stop-smoking medicines — about three times more likely to succeed than going it alone."</li>
+      <li><strong>Act</strong> — offer a referral or signposting today, ideally same-day where opt-out is supported. Even if they decline, the act of offering matters.</li>
+    </ol>
+
+    <blockquote><strong>Worked example.</strong> A practice nurse is doing an annual review with Mrs J, 58, who has hypertension. The review covers BP and bloods. As Mrs J is leaving, the nurse says: "Mrs J, I noticed your record says you smoke. <em>(Ask)</em> Stopping is the single biggest thing you could do to lower your blood-pressure risk. The best way to quit is with our local stop smoking service plus stop-smoking medicines — three times more likely to work than going it alone. <em>(Advise)</em> I can refer you today, would that be okay? <em>(Act)</em>" — 35 seconds.</blockquote>
+
+    <div class="callout warn">
+      <h4>Common pitfall</h4>
+      <p>Skipping <strong>Act</strong>. "I'll think about it" without an offer of support is a missed referral. The default in many services is now <em>opt-out</em> referral: you tell the patient you're referring them and they can opt out if they want. This raises uptake substantially.</p>
+    </div>
+
+    <h2>2. Motivational Interviewing — OARS <span class="src">Miller &amp; Rollnick</span></h2>
+    <p>Motivational interviewing (MI) is a way of having conversations that helps the <em>person</em> talk themselves into change. It is not persuasion, advice-giving in disguise, or "being nice". It is a specific skill set with a substantial evidence base across smoking, alcohol, weight, medication adherence and mental health.</p>
+
+    <p>Students are not expected to be MI-trained therapists. You are expected to recognise the four core micro-skills and use them where you can — they make every conversation better, even brief ones.</p>
+
+    <table>
+      <thead><tr><th>Skill</th><th>What it sounds like</th><th>Why it matters</th></tr></thead>
+      <tbody>
+        <tr><td><strong>O</strong>pen questions</td><td>"What's a typical day like for your eating?" rather than "Do you eat breakfast?"</td><td>Yes/no questions close conversations. Open questions invite the person to think and tell you something useful.</td></tr>
+        <tr><td><strong>A</strong>ffirmations</td><td>"It took something to come to this appointment today." Genuine, specific, not flattery.</td><td>Reinforces self-efficacy. Different from praise — it names a strength.</td></tr>
+        <tr><td><strong>R</strong>eflections</td><td>"So you want to cut down, but evenings are when you really struggle."</td><td>Mirrors their meaning. Shows you've listened. Slows the conversation. Invites them to clarify.</td></tr>
+        <tr><td><strong>S</strong>ummaries</td><td>"Let me check I've got this right — you said…"</td><td>Pulls the conversation together. Shows accountability. Gives them a chance to correct you.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>The "righting reflex"</h3>
+    <p>The single biggest mistake nurses make in behaviour-change conversations is rushing to fix. Someone says "I want to lose weight" and the nurse instantly says "have you tried Slimming World?" That's the <em>righting reflex</em> — the urge to set someone right. It feels helpful. It usually isn't, because you're solving a problem they haven't yet fully described.</p>
+
+    <p>Reflections are the antidote. Instead of jumping to advice, reflect back what you heard: <em>"It sounds like weight has been on your mind for a while."</em> Now they have to engage with their own statement, which is exactly the work of change.</p>
+
+    <h3>Change talk vs sustain talk</h3>
+    <p>People in any process of change voice both — sometimes in the same sentence. MI calls this <strong>ambivalence</strong> and treats it as normal, not as resistance.</p>
+    <ul>
+      <li><strong>Change talk:</strong> "I should stop." / "It's affecting my kids." / "I tried last year and got 3 weeks in."</li>
+      <li><strong>Sustain talk:</strong> "It's the only thing I do for me." / "Nothing's worked before." / "I'll cut down when work calms down."</li>
+    </ul>
+    <p>Reflect change talk back to amplify it. Don't argue with sustain talk — arguing entrenches it. Sustain talk is information about the obstacles, not a reason to give up on the conversation.</p>
+    <p class="small">Source: Miller WR &amp; Rollnick S. <em>Motivational Interviewing: Helping People Change</em>, 3rd ed. (Guilford Press, 2013).</p>
+
+    <h2>3. The COM-B model <span class="src">Michie et al.</span></h2>
+    <p>For any behaviour to happen, three things must be in place. If a behaviour isn't happening, work out which is missing. This stops you from misdiagnosing the problem (and offering the wrong intervention).</p>
+
+    <table>
+      <thead><tr><th></th><th>Question</th><th>If missing, you might…</th></tr></thead>
+      <tbody>
+        <tr><td><strong>C</strong>apability</td><td>Do they know how / are they physically able? Includes physical capability and psychological capability (knowledge, skills, self-efficacy).</td><td>Teach. Demonstrate. Build confidence with small wins.</td></tr>
+        <tr><td><strong>O</strong>pportunity</td><td>Does their environment allow it? Includes physical opportunity (access, time, money, kit) and social opportunity (norms, family, culture).</td><td>Address the environment. Refer to other services. Involve family.</td></tr>
+        <tr><td><strong>M</strong>otivation</td><td>Do they want to? Includes reflective motivation (beliefs, plans) and automatic motivation (habit, emotion, identity).</td><td>Use MI. Explore values. Decisional balance.</td></tr>
+      </tbody>
+    </table>
+
+    <blockquote><strong>Worked example.</strong> Mr A wants to lose weight. He has Type 2 diabetes. He understands what he should eat (capability ✓). He wants to (motivation ✓). But he's a long-distance lorry driver who eats at service stations, sleeps in his cab, and has no fridge (opportunity ✗). Telling him to "eat more vegetables" misses the point — the intervention is a conversation about what he <em>can</em> do given his work, not what he should do in an idealised kitchen.</blockquote>
+
+    <p class="small">Source: Michie S, van Stralen MM, West R. The behaviour change wheel. <em>Implementation Science</em> 2011;6:42.</p>
+
+    <h2>4. Stages of Change (Transtheoretical Model) <span class="src">Prochaska &amp; DiClemente</span></h2>
+    <p>People don't move from "doesn't want to change" to "changed" in one step. The stages are not strictly linear — people loop back, especially through relapse. Match your intervention to the stage:</p>
+
+    <table>
+      <thead><tr><th>Stage</th><th>What they're saying</th><th>What helps</th></tr></thead>
+      <tbody>
+        <tr><td>Pre-contemplation</td><td>"I'm fine, I don't need to."</td><td>Plant seeds. Don't push. Validate the contact. Build trust for next time.</td></tr>
+        <tr><td>Contemplation</td><td>"I should, but…"</td><td>Explore ambivalence. Decisional balance — costs and benefits of changing vs not changing.</td></tr>
+        <tr><td>Preparation</td><td>"Yes, soon."</td><td>Concrete next step. SMART action. Refer to support service. Anticipate obstacles.</td></tr>
+        <tr><td>Action</td><td>"I've started."</td><td>Reinforce. Troubleshoot. Plan for high-risk situations. Celebrate small wins.</td></tr>
+        <tr><td>Maintenance</td><td>"It's been a while."</td><td>Relapse prevention. Identify triggers and protective routines.</td></tr>
+        <tr><td>Lapse / relapse</td><td>"I slipped."</td><td>Normalise. Re-engage without shame. A lapse is information, not failure.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout warn">
+      <h4>Common pitfall</h4>
+      <p>Treating a pre-contemplator like a preparer. If you offer a quit-date diary to someone who hasn't even acknowledged a problem, you'll lose them. Match your intervention to where they actually are — not where you wish they were.</p>
+    </div>
+
+    <p class="small">Source: Prochaska JO, DiClemente CC. Stages and processes of self-change of smoking. <em>J Consult Clin Psychol</em> 1983;51(3):390–5.</p>
+
+    <h2>5. The inequalities lens</h2>
+    <p>Behaviour-change conversations that ignore context come across as judgemental and miss the point. Two frameworks every UK community PH nurse should know:</p>
+    <ul>
+      <li><strong>Marmot's social determinants</strong> — the conditions in which people are born, grow, live, work and age shape health more than individual behaviour. Income, housing, work, early-years experience, education, neighbourhood — these are the playing field.</li>
+      <li><strong>NHS Core20PLUS5</strong> — focuses on the most deprived 20% of the population <em>plus</em> locally identified groups (Core20PLUS), against five clinical priorities — including smoking cessation, severe mental illness, hypertension, chronic respiratory disease and early cancer diagnosis (adults).</li>
+    </ul>
+    <p>On placement, this lens means: <em>before</em> you offer advice, ask what's going on for the person. Cost-of-living, housing quality, work patterns, caring responsibilities, language, immigration status, racism, disability — these are not excuses, they are the playing field. The same VBA, delivered without that awareness, can read as nagging.</p>
+
+    <p class="small">Sources: Marmot M et al. <em>Health Equity in England: The Marmot Review 10 Years On</em> (Institute of Health Equity, 2020); NHS England Core20PLUS5 — adults (2021) and CYP (2022).</p>
+
+    <h2>Putting it together — the 60-second decision tree</h2>
+    <ol>
+      <li><strong>Where is this person on Stages of Change?</strong> — that tells you the broad approach.</li>
+      <li><strong>If they're not changing, which COM-B element is missing?</strong> — that tells you what to address.</li>
+      <li><strong>Use OARS to listen.</strong> — opens the door, builds rapport, surfaces change talk.</li>
+      <li><strong>Close with VBA.</strong> — Ask, Advise, Act, every time.</li>
+      <li><strong>Through it all, hold the inequalities lens.</strong> — what's the playing field?</li>
+    </ol>
+
+    <div class="stage-foot">
+      <button class="btn secondary" data-stage-prev>Back</button>
+      <button class="btn" data-stage-complete="read">I've read this — continue</button>
+    </div>
+  </div>
+
+  <!-- APPLY -->
+  <div class="stage-panel" data-stage-panel="apply">
+    <p>Four short exercises. Aim for honest answers, not the "right" ones — you'll learn more.</p>
+
+    <h2>Exercise 1 — Stages of Change</h2>
+    <p>For each statement below, decide which stage it represents. Tap your answer; you'll get instant feedback.</p>
+    <div class="sort-pool" data-exercise="stages-sort"
+         data-bins='[
+           {"id":"act","label":"Action"},
+           {"id":"prep","label":"Preparation"},
+           {"id":"lap","label":"Lapse / relapse"},
+           {"id":"con","label":"Contemplation"},
+           {"id":"pre","label":"Pre-contemplation"},
+           {"id":"main","label":"Maintenance"}
+         ]'
+         data-items='[
+           {"text":"It&#39;s been about eight months now and I don&#39;t think about it most days.","answer":"main","why":"Maintenance — keep working on relapse prevention."},
+           {"text":"I really should, but evenings are when I really struggle.","answer":"con","why":"Voicing both desire and obstacle = ambivalence = contemplation."},
+           {"text":"I haven&#39;t smoked in four days.","answer":"act","why":"They&#39;ve started. Action stage — reinforce, troubleshoot, plan triggers."},
+           {"text":"I had two cigarettes at a wedding and now I feel like I&#39;ve blown the whole thing.","answer":"lap","why":"A lapse, plus the all-or-nothing thinking that often follows. Normalise — a lapse is information, not failure."},
+           {"text":"I&#39;m fine, I don&#39;t see what the fuss is about.","answer":"pre","why":"No acknowledgement of a problem. The work here is rapport, not change planning."},
+           {"text":"I&#39;ve booked an appointment with the stop smoking service for Thursday.","answer":"prep","why":"Concrete next step taken — preparation."}
+         ]'></div>
+
+    <h2>Exercise 2 — MI rephrase</h2>
+    <p>Each row shows a statement a nurse might make that breaks MI principles. Have a go at rewriting it more openly, then reveal a model answer. There is no single right rephrase — yours may be better than mine.</p>
+    <div data-exercise="rephrase">
+      <div class="rephrase">
+        <div class="original">"You really need to lose weight before something happens."</div>
+        <textarea placeholder="Your rephrase…" aria-label="Your rephrase"></textarea>
+        <div class="btn-row"><button class="btn secondary reveal">Reveal model</button></div>
+        <div class="model"><strong>One option:</strong> "What are you noticing about how your weight is affecting you day-to-day?" — open question, non-judgemental, hands the work back to them.</div>
+      </div>
+      <div class="rephrase">
+        <div class="original">"Why don't you just stop drinking?"</div>
+        <textarea placeholder="Your rephrase…" aria-label="Your rephrase"></textarea>
+        <div class="btn-row"><button class="btn secondary reveal">Reveal model</button></div>
+        <div class="model"><strong>One option:</strong> "Tell me about a time you cut down — what worked, and what got in the way?" — affirms past effort and surfaces both change talk and obstacles.</div>
+      </div>
+      <div class="rephrase">
+        <div class="original">"Have you thought about quitting smoking?"</div>
+        <textarea placeholder="Your rephrase…" aria-label="Your rephrase"></textarea>
+        <div class="btn-row"><button class="btn secondary reveal">Reveal model</button></div>
+        <div class="model"><strong>One option:</strong> "What's it like for you, smoking right now?" — opens an exploration without leading. The original is a closed question that almost everyone answers "yes" to without engaging.</div>
+      </div>
+      <div class="rephrase">
+        <div class="original">"You've got to take this seriously, your mum had a heart attack."</div>
+        <textarea placeholder="Your rephrase…" aria-label="Your rephrase"></textarea>
+        <div class="btn-row"><button class="btn secondary reveal">Reveal model</button></div>
+        <div class="model"><strong>One option:</strong> "I'm aware your mum had a heart attack. How does her health feature in how you think about your own?" — uses the family history as a doorway into <em>their</em> meaning, rather than as a hammer.</div>
+      </div>
+    </div>
+
+    <h2>Exercise 3 — COM-B sorter</h2>
+    <p>Sort each barrier to the dominant COM-B component. Some have an element of more than one — pick the most prominent and read why.</p>
+    <div class="sort-pool" data-exercise="comb-sort"
+         data-bins='[
+           {"id":"C","label":"Capability"},
+           {"id":"O","label":"Opportunity"},
+           {"id":"M","label":"Motivation"}
+         ]'
+         data-items='[
+           {"text":"Doesn&#39;t know what counts as a portion of vegetables.","answer":"C","why":"Psychological capability — knowledge gap."},
+           {"text":"Lives next door to a takeaway and has no fridge or oven.","answer":"O","why":"Physical opportunity — environment makes the behaviour very hard."},
+           {"text":"Believes losing weight isn&#39;t worth the misery of giving up the few things they enjoy.","answer":"M","why":"Reflective motivation — belief about cost vs benefit."},
+           {"text":"Husband makes disparaging comments when she tries to walk in the evenings.","answer":"O","why":"Social opportunity — the social environment is hostile to the behaviour."},
+           {"text":"Has tried to quit four times and given up before week two each time.","answer":"M","why":"Automatic motivation, plus an erosion of self-efficacy. Address with affirming past effort and a stronger pharmacotherapy plan."},
+           {"text":"Has limited mobility and cannot walk to the shops.","answer":"C","why":"Physical capability — though it shades into opportunity (no delivery option). The intervention starts with practical workarounds."}
+         ]'></div>
+
+    <h2>Exercise 4 — VBA builder</h2>
+    <p>Scenario: <em>Mrs B, 62, smokes 15 a day, comes in for an annual diabetes review. As she's leaving she says, "I keep meaning to quit but life's mad at the moment."</em></p>
+    <p>Write your <strong>Ask</strong>, <strong>Advise</strong> and <strong>Act</strong> — three short sentences each. Reveal the model when you're ready. Yours may be better.</p>
+    <div data-exercise="rephrase">
+      <div class="rephrase">
+        <div class="original"><strong>Ask</strong> — establish and acknowledge the behaviour.</div>
+        <textarea placeholder="Your version…" aria-label="Your Ask"></textarea>
+        <div class="btn-row"><button class="btn secondary reveal">Reveal model</button></div>
+        <div class="model">"You mentioned you've been meaning to quit. Can I ask you a bit more about that?"</div>
+      </div>
+      <div class="rephrase">
+        <div class="original"><strong>Advise</strong> — the most effective evidence-based route.</div>
+        <textarea placeholder="Your version…" aria-label="Your Advise"></textarea>
+        <div class="btn-row"><button class="btn secondary reveal">Reveal model</button></div>
+        <div class="model">"What we know is that the best way to stop is with our local Stop Smoking Service plus stop-smoking medicines together. People are about three times more likely to quit successfully than going it alone."</div>
+      </div>
+      <div class="rephrase">
+        <div class="original"><strong>Act</strong> — offer support today.</div>
+        <textarea placeholder="Your version…" aria-label="Your Act"></textarea>
+        <div class="btn-row"><button class="btn secondary reveal">Reveal model</button></div>
+        <div class="model">"I can refer you to the service today and they'll get in touch within a week to talk it through — would that be okay? You can pull out at any point."</div>
+      </div>
+    </div>
+
+    <div class="stage-foot">
+      <button class="btn secondary" data-stage-prev>Back</button>
+      <button class="btn" data-stage-complete="apply">Mark exercises done</button>
+    </div>
+  </div>
+
+  <!-- TEST -->
+  <div class="stage-panel" data-stage-panel="test">
+    <p>Ten questions. Each has one best answer. You'll see a rationale on every option, including why the wrong ones are wrong. Your score is saved on this device.</p>
+
+    <div data-quiz="toolkit" data-questions-id="toolkit-quiz-data"
+      data-questions='[
+        {
+          "stem":"Which of the following is the correct order for Very Brief Advice?",
+          "options":[
+            {"label":"Acknowledge, Advise, Act","correct":false,"why":"Acknowledge isn&#39;t the formal first step. The model is Ask — establish the behaviour."},
+            {"label":"Ask, Advise, Act","correct":true,"why":"Correct. VBA is Ask, Advise, Act. Ask establishes the behaviour, Advise gives the evidence-based route, Act is the active offer of support — usually a referral."},
+            {"label":"Approach, Assess, Advise","correct":false,"why":"Mixes structures. Assessment is broader than VBA, which is deliberately brief."},
+            {"label":"Ask, Advise, Action plan","correct":false,"why":"Action plan implies a longer intervention. The third step is the offer of referral or signposting — the &#39;Act&#39; component."}
+          ]
+        },
+        {
+          "stem":"A client says: &#34;I want to stop smoking but evenings are when I really struggle.&#34; This is best classified as:",
+          "options":[
+            {"label":"Sustain talk","correct":false,"why":"There is sustain talk in there (&#39;evenings are when I struggle&#39;), but the statement also contains clear change talk (&#39;I want to stop&#39;)."},
+            {"label":"Pre-contemplation","correct":false,"why":"They have explicitly stated a desire to change, which rules out pre-contemplation."},
+            {"label":"Change talk with ambivalence","correct":true,"why":"Correct. The statement is ambivalence — change talk and sustain talk co-existing. Reflect both, don&#39;t argue."},
+            {"label":"Resistance","correct":false,"why":"MI explicitly avoids the term &#39;resistance&#39;. What sounds like resistance is usually information about ambivalence."}
+          ]
+        },
+        {
+          "stem":"Which OARS skill helps avoid the &#34;righting reflex&#34; of giving advice too early?",
+          "options":[
+            {"label":"Open questions","correct":false,"why":"Open questions help, but on their own they don&#39;t restrain advice-giving."},
+            {"label":"Affirmations","correct":false,"why":"Affirmations recognise effort but don&#39;t prevent the rush to fix."},
+            {"label":"Reflections","correct":true,"why":"Correct. Reflecting back what you heard slows the conversation and hands the work back to the person — the antidote to the righting reflex."},
+            {"label":"Summaries","correct":false,"why":"Summaries are useful for closure but typically come at the end, not in place of early advice."}
+          ]
+        },
+        {
+          "stem":"Mr A knows about diabetes risk and wants to lose weight. He&#39;s a long-distance lorry driver who eats at service stations and has no fridge in his cab. In COM-B terms, the dominant barrier is:",
+          "options":[
+            {"label":"Capability","correct":false,"why":"He has knowledge — psychological capability is intact. Physical capability isn&#39;t the central issue."},
+            {"label":"Opportunity","correct":true,"why":"Correct. The environment doesn&#39;t allow the behaviour — physical opportunity is the dominant block. The conversation needs to be about what he <em>can</em> do given his work."},
+            {"label":"Motivation","correct":false,"why":"He wants to lose weight — reflective motivation is present."},
+            {"label":"Cannot tell from the information given","correct":false,"why":"There&#39;s enough information here. Capability and motivation are present; opportunity is the missing piece."}
+          ]
+        },
+        {
+          "stem":"A client in the Action stage of change is best supported by:",
+          "options":[
+            {"label":"Planting seeds and validating","correct":false,"why":"That belongs in pre-contemplation — for someone who isn&#39;t yet acknowledging a problem."},
+            {"label":"Exploring ambivalence","correct":false,"why":"Ambivalence work belongs in contemplation. By Action they&#39;ve resolved enough ambivalence to start."},
+            {"label":"Reinforcing, troubleshooting and planning for triggers","correct":true,"why":"Correct. They&#39;ve started; the work is reinforcement, anticipation of relapse triggers, and concrete problem-solving."},
+            {"label":"Crisis-level escalation","correct":false,"why":"Action is a positive stage; nothing here suggests crisis."}
+          ]
+        },
+        {
+          "stem":"The Marmot review is most useful in community PH practice because it:",
+          "options":[
+            {"label":"Provides specific clinical thresholds for risk assessment","correct":false,"why":"It is not a clinical thresholds document — those come from NICE and other guideline bodies."},
+            {"label":"Frames health outcomes as shaped by social determinants","correct":true,"why":"Correct. Marmot&#39;s contribution is the social-determinants lens — health is shaped by the conditions in which people are born, grow, live, work and age."},
+            {"label":"Sets out NMC standards for proficiency","correct":false,"why":"NMC standards are different documents (Future Nurse, the Code)."},
+            {"label":"Lists the duties under the Care Act 2014","correct":false,"why":"Care Act duties are statute, not the Marmot review."}
+          ]
+        },
+        {
+          "stem":"NHS Core20PLUS5 focuses on:",
+          "options":[
+            {"label":"The five public health priorities of the Long Term Plan","correct":false,"why":"Core20PLUS5 sits within the Long Term Plan but is more specific — it identifies populations <em>and</em> clinical priorities."},
+            {"label":"The 20 most deprived areas in England plus 5 healthcare deserts","correct":false,"why":"Not geographic in that way — &#39;Core20&#39; refers to the most deprived 20% of the population by Index of Multiple Deprivation, nationally."},
+            {"label":"The most deprived 20% of the population, plus locally identified groups, against five clinical priorities","correct":true,"why":"Correct. Core20 = most deprived quintile; PLUS = locally identified groups; 5 = clinical priorities (smoking cessation, severe mental illness, hypertension, chronic respiratory disease, early cancer diagnosis for adults)."},
+            {"label":"A staffing-ratio framework","correct":false,"why":"It is a health-inequalities framework, not a workforce model."}
+          ]
+        },
+        {
+          "stem":"&#34;Sustain talk&#34; in motivational interviewing is best understood as:",
+          "options":[
+            {"label":"Resistance that should be confronted","correct":false,"why":"MI explicitly rejects this framing — confronting sustain talk usually entrenches it."},
+            {"label":"Information about ambivalence","correct":true,"why":"Correct. Sustain talk is information about what is keeping the person stuck. Reflect it; don&#39;t argue with it."},
+            {"label":"A reason to refer onwards","correct":false,"why":"Sustain talk is normal in change. It isn&#39;t a referral trigger."},
+            {"label":"Evidence the person doesn&#39;t want help","correct":false,"why":"Often people who voice plenty of sustain talk also want help. Both can be true at once."}
+          ]
+        },
+        {
+          "stem":"Which of these is an example of an open question that fits MI?",
+          "options":[
+            {"label":"&#34;Don&#39;t you think you should cut down?&#34;","correct":false,"why":"Leading and judgemental — the opposite of MI."},
+            {"label":"&#34;Do you smoke?&#34;","correct":false,"why":"Useful for status (it&#39;s the &#39;Ask&#39; in VBA) but it&#39;s a closed question, not an open one."},
+            {"label":"&#34;What&#39;s a typical day like for your eating?&#34;","correct":true,"why":"Correct. Genuinely open (cannot be answered yes/no), non-leading, invites the person to think and tell you something useful."},
+            {"label":"&#34;Have you tried Slimming World?&#34;","correct":false,"why":"Closed and prescriptive — and slips into the righting reflex."}
+          ]
+        },
+        {
+          "stem":"In community public health practice, the inequalities lens means that — before offering behaviour change advice — you should:",
+          "options":[
+            {"label":"Wait until you have completed a full social history before saying anything","correct":false,"why":"Too restrictive — VBA is short by design and shouldn&#39;t be deferred. The lens shapes how you talk, not whether."},
+            {"label":"Ask what is going on for the person — context shapes which advice is useful","correct":true,"why":"Correct. The same VBA, delivered without awareness of someone&#39;s playing field, can land as nagging. Ask what&#39;s going on, then tailor."},
+            {"label":"Offer the same evidence-based advice to everyone, regardless of context","correct":false,"why":"This ignores the well-documented fact that the same advice produces different outcomes depending on the person&#39;s opportunities and constraints."},
+            {"label":"Refer all socioeconomically deprived clients to specialist services","correct":false,"why":"Inappropriate and stigmatising. The lens is about understanding context, not gatekeeping."}
+          ]
+        }
+      ]'>
+      <p class="small">The questions will appear here.</p>
+    </div>
+
+    <div class="stage-foot">
+      <button class="btn secondary" data-stage-prev>Back</button>
+      <button class="btn" data-stage-complete="test">Mark test done</button>
+    </div>
+  </div>
+
+  <!-- REFLECT -->
+  <div class="stage-panel" data-stage-panel="reflect">
+    <p>Reflection is part of NMC revalidation and embedded in your PAD/portfolio. Use a model — Gibbs (1988) is the most common in UK nurse training. Three short prompts; saved to this device only. <strong>Do not enter identifiable patient information.</strong></p>
+
+    <label for="t-r1">1. Think of a behaviour-change conversation you've had on placement (or observed). Which framework or skill from this module would have made it sharper, and how?</label>
+    <textarea id="t-r1" data-reflect="toolkit:r1"></textarea>
+
+    <label for="t-r2">2. Where do you find yourself most likely to fall into the "righting reflex" — and what's one small thing you'll try differently next time?</label>
+    <textarea id="t-r2" data-reflect="toolkit:r2"></textarea>
+
+    <label for="t-r3">3. Which theme of the NMC Code does this learning most connect to (Prioritise people / Practise effectively / Preserve safety / Promote professionalism and trust), and why?</label>
+    <textarea id="t-r3" data-reflect="toolkit:r3"></textarea>
+
+    <div class="btn-row">
+      <button class="btn" data-reflect-save="toolkit">Save</button>
+      <button class="btn secondary" data-reflect-copy="toolkit">Copy to clipboard</button>
+    </div>
+
+    <div class="stage-foot">
+      <button class="btn secondary" data-stage-prev>Back</button>
+      <button class="btn ok" data-stage-complete="reflect">Mark module complete</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SMOKING CESSATION — FULL MODULE                              -->
+<!-- ============================================================ -->
+<section class="page" id="smoking" data-module="smoking">
+  <div class="topic-head"><span class="crumb">Module 2 — topic</span><h1>Smoking cessation</h1></div>
+
+  <a href="#risk" class="risk-banner" data-nav><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg><span>Two flags on this page: anyone on <strong>clozapine</strong> (stopping smoking can cause fatal toxicity if the dose isn't reviewed), and <strong>pregnancy</strong> (specialist maternal pathway).</span></a>
+
+  <div class="progress" aria-label="Module progress">
+    <span>Progress</span>
+    <div class="progress-bar"><span data-mod-progress="smoking" style="width:0%"></span></div>
+    <span data-mod-pct="smoking">0%</span>
+  </div>
+
+  <div class="stages" role="tablist" aria-label="Module stages">
+    <button class="stage-btn" role="tab" data-stage="obj" aria-selected="true"><span class="dot" data-mod-dot="smoking:obj"></span>Objectives</button>
+    <button class="stage-btn" role="tab" data-stage="read" aria-selected="false"><span class="dot" data-mod-dot="smoking:read"></span>Read</button>
+    <button class="stage-btn" role="tab" data-stage="apply" aria-selected="false"><span class="dot" data-mod-dot="smoking:apply"></span>Apply</button>
+    <button class="stage-btn" role="tab" data-stage="test" aria-selected="false"><span class="dot" data-mod-dot="smoking:test"></span>Test</button>
+    <button class="stage-btn" role="tab" data-stage="reflect" aria-selected="false"><span class="dot" data-mod-dot="smoking:reflect"></span>Reflect</button>
+  </div>
+
+  <!-- OBJECTIVES -->
+  <div class="stage-panel active" data-stage-panel="obj">
+    <div class="objectives">
+      <h3>By the end of this module you will be able to</h3>
+      <ol>
+        <li>Deliver Very Brief Advice on smoking confidently and concisely.</li>
+        <li>Describe the evidence-based pharmacotherapy options and which is suitable for whom.</li>
+        <li>Identify pregnancy, severe mental illness and child/young person scenarios that need a specific pathway.</li>
+        <li>Explain why combination NRT is more effective than single NRT.</li>
+        <li>Frame smoking cessation as a health-equity intervention, not a lifestyle nag.</li>
+      </ol>
+    </div>
+    <p>This module assumes you've completed (or skimmed) the <a href="#toolkit" data-nav>Behaviour change toolkit</a> — most of the technique here is applied behaviour change.</p>
+    <p>Plan to spend <strong>about 30 minutes</strong> on the Read stage, plus shorter sessions on Apply and Test.</p>
+    <div class="stage-foot">
+      <button class="btn secondary" data-stage-prev disabled>Back</button>
+      <button class="btn" data-stage-complete="obj">I've read the objectives</button>
+    </div>
+  </div>
+
+  <!-- READ -->
+  <div class="stage-panel" data-stage-panel="read">
+
+    <h2>Why smoking cessation matters</h2>
+    <p>Smoking is the leading cause of preventable death and disability in the UK. It causes around 80,000 deaths a year in England alone, and roughly half of all long-term smokers will die from a smoking-related disease. The conditions are familiar — lung cancer, COPD, ischaemic heart disease, stroke, multiple other cancers, peripheral vascular disease — but smoking also drives less obvious harms: type 2 diabetes risk, dementia, fertility, fracture healing, complications after surgery.</p>
+    <p>Stopping at <strong>any</strong> age improves life expectancy. Quitting before 40 avoids most of the excess mortality; quitting at 60 still adds years and quality. The gains start fast — within 24 hours, CO levels normalise; within weeks, lung function improves measurably; within a year, coronary risk halves; over 10–15 years it approaches that of a never-smoker.<span class="src">Doll et al.</span></p>
+
+    <h2>What good looks like</h2>
+    <p>Every contact records smoking status. Every smoker is offered Very Brief Advice. Every smoker who is interested is referred to a behavioural support service <em>and</em> offered evidence-based pharmacotherapy. The combination is roughly three times more effective than willpower alone. None of this is gatekept; you don't need a "ready" smoker — anyone who smokes is offered the conversation, every time.</p>
+
+    <h2>Very Brief Advice for smoking — the standard</h2>
+    <ol>
+      <li><strong>Ask</strong>: "Do you smoke?" — record it. (Cigarettes, roll-ups, vapes, shisha, cannabis with tobacco — all relevant.)</li>
+      <li><strong>Advise</strong>: "The best way to stop is with a combination of behavioural support and stop-smoking medicines — about three times more likely to succeed than going it alone."</li>
+      <li><strong>Act</strong>: "I can refer you to our local stop smoking service today, would that be okay?" Default to <em>opt-out</em> referral if your service supports it — uptake is substantially higher.</li>
+    </ol>
+    <p class="small">Adapted from NCSCT Very Brief Advice; aligned with NICE NG209.</p>
+
+    <div class="callout warn">
+      <h4>Common pitfall — the willpower script</h4>
+      <p>Saying "you just need to want it enough" is wrong, unhelpful, and unkind. Tobacco dependence is a genuine addiction — nicotine is one of the most addictive substances we know. Telling smokers it's a willpower problem suggests their previous attempts failed because they didn't want it enough. Most smokers have tried multiple times. The evidence is clear: <em>the right support, including pharmacotherapy, makes the difference.</em></p>
+    </div>
+
+    <h2>Pharmacotherapy at a glance</h2>
+    <p>Students do not prescribe. Recognise the options so you can answer "what's available?" — and so you know who needs flagging.</p>
+
+    <h3>Nicotine Replacement Therapy (NRT)</h3>
+    <p>Replaces the nicotine the smoker is dependent on, without the smoke (which is the main source of harm). Comes in two functional types:</p>
+    <ul>
+      <li><strong>Long-acting</strong>: patches (16- or 24-hour). Background nicotine through the day.</li>
+      <li><strong>Short-acting</strong>: gum, lozenge, mouth spray, nasal spray, inhalator, mouth strip. Address breakthrough cravings within a few minutes.</li>
+    </ul>
+    <p><strong>Combination NRT</strong> — patch <em>plus</em> a fast-acting form — is more effective than single NRT. It is <em>first-line</em> in NICE NG209. Many students assume "double dose = bad". The opposite is true: single NRT often under-treats, leading to relapse.</p>
+    <p>Side effects are usually local (skin reactions to patches, mouth irritation with gum/lozenge). NRT is <strong>safer than smoking in pregnancy</strong> when behavioural support alone has not worked.</p>
+
+    <h3>Varenicline</h3>
+    <p>A prescription oral medication that partially activates nicotinic receptors and blocks reinforcement from smoking. Highly effective. Pfizer's branded version <em>Champix</em> was withdrawn from the UK in 2021 due to a nitrosamine impurity issue; varenicline has since returned to the UK market under different manufacturers and is no longer sold as Champix. As always, check current SPC and your formulary. Not used in pregnancy or under 18.</p>
+
+    <h3>Bupropion (Zyban)</h3>
+    <p>An oral antidepressant licensed for smoking cessation. Less commonly used than NRT or varenicline. Several contraindications including history of seizures and eating disorders; check the BNF. Not in pregnancy or under 18.</p>
+
+    <h3>Cytisine</h3>
+    <p>A plant-derived nicotinic partial agonist used in many countries for decades. Recommended by NICE NG209 as a quit aid. UK availability has been variable; check what your service stocks.</p>
+
+    <h3>E-cigarettes / vapes</h3>
+    <p>Not a licensed medicine, but recommended by NICE and OHID as a quit aid for adult smokers. The expert consensus is that vaping is substantially less harmful than smoking — though "less harmful" is not "harmless", and the long-term picture is still maturing. Vapes should not be promoted to non-smokers, and not to under-18s. In pregnancy, many UK community services now offer NRT and vaping as equal quit-aid options alongside specialist behavioural support — see Pregnancy below.</p>
+
+    <p class="small">Always check the current BNF for indications, doses and contraindications. Pharmacotherapy availability changes — confirm with your service before saying anything definite.</p>
+
+    <h2>Specific populations — pathways to know</h2>
+
+    <h3>Pregnancy <span class="src">SMP / NICE / OHID</span></h3>
+    <ul>
+      <li>Smoking in pregnancy is a leading cause of stillbirth, preterm birth, low birthweight, sudden infant death and other harms — stopping is the single biggest thing that improves outcomes.</li>
+      <li>National policy: <strong>CO monitoring at every antenatal appointment</strong>. CO ≥4 ppm typically triggers offer of specialist support; thresholds vary.</li>
+      <li>Refer to a specialist maternal stop smoking service — generic services are not the right fit.</li>
+      <li><strong>NRT and vaping are both offered as quit-aid options in pregnancy</strong> alongside specialist behavioural support. Many UK community services now treat them as equal options and follow the woman's preference, on the principle that the priority is stopping smoking and the right tool is the one she'll stick with. NRT is licensed; vaping is unlicensed but supported. For NRT, use the lowest effective dose; intermittent forms (gum, spray) are often preferred over 24-hr patches. Confirm specifics with the prescriber and follow your local pathway.</li>
+      <li>Varenicline and bupropion are <strong>not used</strong> in pregnancy.</li>
+    </ul>
+
+    <h3>Severe mental illness (SMI) <span class="src">NICE NG209 / RCPsych</span></h3>
+    <div class="callout danger">
+      <h4>Clozapine — fatal-toxicity risk if smoking stops without dose review</h4>
+      <p>Tobacco smoke (not nicotine) induces the liver enzyme CYP1A2. When a smoker on <strong>clozapine</strong> stops smoking — including switching to vaping or NRT, or being admitted to a smoke-free ward — clearance falls and plasma clozapine can rise rapidly to toxic levels. Clozapine toxicity can cause seizures, arrhythmias and death. <strong>The prescriber and mental health team must be informed before or at the point of stopping</strong>, so the dose can be reviewed and levels monitored. The same mechanism affects <strong>olanzapine</strong> (less acutely dangerous but dose may need adjustment). Other CYP1A2-metabolised drugs (e.g. caffeine, theophylline, some others) are also affected.</p>
+    </div>
+    <ul>
+      <li>Smoking rates in people with SMI are roughly 2–3× the general population.</li>
+      <li>People with SMI die on average <strong>15–20 years earlier</strong> than the general population, and smoking is the single largest contributor.</li>
+      <li>Stopping smoking is feasible in this population with good support — old assumptions that it would worsen mental health have been refuted.</li>
+      <li>Refer to specialist support; "smokefree NHS" trust policies should be enabling, not punitive.</li>
+    </ul>
+
+    <h3>Children and young people</h3>
+    <ul>
+      <li>Dedicated CYP pathways — adult services aren't designed for the developmental and confidentiality needs of under-18s.</li>
+      <li>Vaping in young people is a public health concern in its own right (advertising, flavours, nicotine dependence in non-smokers).</li>
+      <li>Varenicline and bupropion are not used in under-18s.</li>
+      <li>Always think about the household — exposure to second-hand smoke in children is itself a health harm.</li>
+    </ul>
+
+    <h2>The CO monitor — how to use it well</h2>
+    <p>CO breath testing is a simple, immediate-feedback tool. The smoker exhales into the device after a 15-second breath hold; the reading appears in ppm and as % carboxyhaemoglobin. A few notes:</p>
+    <ul>
+      <li>A typical non-smoker is ≤4 ppm. Recently smoked &gt;10 ppm. Heavy smokers can be 20–40+.</li>
+      <li>It is a <em>tool for the smoker</em>, not for you to pass judgement. Used well it shows them their own risk in numbers and lets them watch it fall as they cut down or quit.</li>
+      <li>A high reading in someone who says they don't smoke can also mean recent passive exposure — or, rarely, faulty domestic appliances. Consider a gas-safety check if the picture doesn't fit.</li>
+    </ul>
+
+    <h2>Inequalities lens</h2>
+    <p>Smoking is one of the largest drivers of health inequality in England. Adults in routine and manual occupations smoke at roughly twice the rate of managerial/professional roles. People with SMI, in homelessness, in prison, and in some long-term-condition groups smoke at much higher rates than the general population. Smoking-related illness sits disproportionately on the most deprived communities and is the single biggest contributor to the life-expectancy gap.</p>
+    <p>Practically: the smoker in front of you may have far less margin than you to "just stop", and may have stopped before only to relapse under stress. Use that as data, not as evidence they don't want to. Treat the conversation as a health-equity intervention, not a lifestyle nag.</p>
+    <p class="small">Sources: ONS Adult smoking habits in the UK (annual); OHID; NHS England Core20PLUS5.</p>
+
+    <h2>Documenting smoking status</h2>
+    <ul>
+      <li>Status (current, ex, never), how long, what they smoke, how many.</li>
+      <li>Past quit attempts — what, when, what worked, what didn't.</li>
+      <li>VBA delivered — yes/no, who by.</li>
+      <li>Referral made — to where, when, with consent.</li>
+      <li>CO reading where taken.</li>
+      <li>Any specific population flags (pregnancy, SMI, CYP, on clozapine/olanzapine).</li>
+    </ul>
+
+    <div class="stage-foot">
+      <button class="btn secondary" data-stage-prev>Back</button>
+      <button class="btn" data-stage-complete="read">I've read this — continue</button>
+    </div>
+  </div>
+
+  <!-- APPLY -->
+  <div class="stage-panel" data-stage-panel="apply">
+    <p>Three exercises plus a short branching scenario.</p>
+
+    <h2>Exercise 1 — Triage sort</h2>
+    <p>Match each client to the most appropriate pathway.</p>
+    <div class="sort-pool" data-exercise="smoke-triage" data-bins-id="smoke-triage-bins" data-items-id="smoke-triage-items"
+         data-bins='[
+           {"id":"maternal","label":"Specialist maternal stop smoking"},
+           {"id":"smi","label":"SMI pathway + flag prescriber"},
+           {"id":"cyp","label":"CYP pathway"},
+           {"id":"general","label":"General Stop Smoking Service"},
+           {"id":"safeguard","label":"Safeguarding"}
+         ]'
+         data-items='[
+           {"text":"Pregnant 14 weeks, smokes 8/day, never tried to quit before.","answer":"maternal","why":"Pregnancy = specialist maternal pathway. CO monitoring at every antenatal contact. NRT and vaping are both offered as quit-aid options; varenicline and bupropion are not used in pregnancy."},
+           {"text":"35yo with schizophrenia, on clozapine 400 mg/day, smokes 30/day, says he wants to quit.","answer":"smi","why":"SMI pathway with specialist support. Crucially: stopping smoking will raise clozapine plasma levels; the prescriber must be flagged so the dose can be adjusted."},
+           {"text":"15yo found vaping in school, has never smoked tobacco.","answer":"cyp","why":"Adolescent / CYP pathway — adult Stop Smoking Service is not designed for under-18s, and the issue here is nicotine dependence in a never-smoker, not cessation."},
+           {"text":"67yo with COPD, smokes 20/day for 50 years, ready to try again after two previous quits.","answer":"general","why":"General Stop Smoking Service plus combination NRT or alternative pharmacotherapy. Past attempts are useful information, not failure."},
+           {"text":"40yo dad of three, smokes around the children at home and the children are showing recurrent respiratory symptoms.","answer":"safeguard","why":"Repeated second-hand smoke exposure is a recognised safeguarding concern when it&#39;s harming a child. The intervention is health <em>and</em> safeguarding — discuss with your supervisor and follow local procedure. (Adult also needs Stop Smoking referral.)"}
+         ]'></div>
+
+    <h2>Exercise 2 — Mythbusters</h2>
+    <p>True or false? Tap your answer to see the rationale.</p>
+    <div class="sort-pool" data-exercise="smoke-myth" data-bins-id="smoke-myth-bins" data-items-id="smoke-myth-items"
+         data-bins='[
+           {"id":"T","label":"True"},
+           {"id":"F","label":"False"}
+         ]'
+         data-items='[
+           {"text":"Vaping is just as harmful as smoking.","answer":"F","why":"False. Expert consensus is that vaping is substantially less harmful than smoking — though &#34;less harmful&#34; is not &#34;harmless&#34; and long-term data is still emerging. NICE / OHID recommend e-cigarettes as a quit aid for adult smokers."},
+           {"text":"NRT just keeps you addicted to nicotine.","answer":"F","why":"False. The harm from smoking comes overwhelmingly from the smoke (combustion products, tar, CO), not from nicotine itself. NRT delivers nicotine without the smoke and is much safer than continued smoking, including in long-term use."},
+           {"text":"You can&#39;t use NRT in pregnancy.","answer":"F","why":"False. NRT is licensed in pregnancy and is offered alongside vaping as a quit-aid option (many UK services now offer them equally). Use the lowest effective dose; intermittent forms (gum, spray) are often preferred over 24-hr patches. Confirm with the prescriber."},
+           {"text":"For people with severe mental illness, stopping smoking can affect their psychiatric medication levels.","answer":"T","why":"True. Stopping smoking removes CYP1A2 induction by tobacco smoke, raising plasma clozapine and olanzapine. The prescriber must be informed so the dose can be adjusted to avoid toxicity."},
+           {"text":"&#34;Cutting down&#34; from 20 to 10 a day halves the cardiovascular risk.","answer":"F","why":"False. Smokers who cut down often inhale more deeply and smoke each cigarette more thoroughly (compensatory smoking). Risk does not fall in proportion to count. Cutting down can be a useful step toward stopping, but it isn&#39;t a substitute."},
+           {"text":"Asking patients about smoking at every contact is recommended even if they&#39;ve declined help before.","answer":"T","why":"True. MECC asks every contact, every time. Past declines are not a reason to stop offering — many smokers quit on the third or fourth attempt and the seed-planting matters."}
+         ]'></div>
+
+    <h2>Exercise 3 — Branching scenario</h2>
+    <div class="scenario" data-exercise="scenario" data-scenario-id="smoke-scenario-data" data-scenario='{
+      "vignette":"Mr K, 52, new to the practice. FEV1 65% predicted (moderate COPD). Smokes 15/day, says: &#34;I&#39;ve cut down from 25 — that&#39;s better, right?&#34; Pleasant, slightly defensive. You have 10 minutes.",
+      "steps":[
+        {
+          "id":"s1",
+          "prompt":"What do you say first?",
+          "choices":[
+            {"id":"a","label":"&#34;Cutting down doesn&#39;t really help. You need to stop completely.&#34;","class":"poor","feedback":"Technically the evidence is on your side — but the delivery is the righting reflex in full force. He came in slightly defensive; this confirms his suspicion that the appointment will be a lecture. He&#39;ll disengage.","next":null},
+            {"id":"b","label":"&#34;Yes, well done — keep going.&#34;","class":"suboptimal","feedback":"Affirming effort is good, but uncritical reinforcement here misses an important fact: cutting down rarely halves the harm because of compensatory smoking. He may walk away believing he&#39;s safe. You&#39;ve given him false reassurance.","next":null},
+            {"id":"c","label":"&#34;Cutting down is a good first step. Can I share what we know about cutting down vs stopping?&#34;","class":"preferred","feedback":"Affirms effort, asks permission, signals an evidence-based conversation is coming. Classic MI move.","next":"s2"}
+          ]
+        },
+        {
+          "id":"s2",
+          "prompt":"He says yes. He asks: &#34;Why doesn&#39;t cutting down work as well?&#34;",
+          "choices":[
+            {"id":"a","label":"&#34;It does — half the cigarettes is half the harm.&#34;","class":"poor","feedback":"Misleading. Compensatory smoking means risk doesn&#39;t fall in proportion to count.","next":null},
+            {"id":"b","label":"&#34;People often inhale more deeply or smoke each one more thoroughly. The risk doesn&#39;t drop as much as the count.&#34;","class":"preferred","feedback":"Accurate, accessible explanation of compensatory smoking. He now has a reason to consider going further than cutting down.","next":"s3"},
+            {"id":"c","label":"&#34;Cutting down has been shown to be useless.&#34;","class":"poor","feedback":"Too strong and inaccurate. Cutting down can be a useful step toward stopping, especially with NRT support — it&#39;s not useless.","next":null}
+          ]
+        },
+        {
+          "id":"s3",
+          "prompt":"He&#39;s thoughtful. &#34;OK. So what do you suggest?&#34;",
+          "choices":[
+            {"id":"a","label":"&#34;Just keep working on cutting down — try not to smoke before noon.&#34;","class":"suboptimal","feedback":"A small structural change can help, but on its own this misses the offer of pharmacotherapy and behavioural support — the &#39;Act&#39; component of VBA.","next":null},
+            {"id":"b","label":"&#34;The most effective route is our local Stop Smoking Service plus stop-smoking medicines together — about three times more likely to work than going it alone. I can refer you today, would that be okay?&#34;","class":"preferred","feedback":"Standard VBA Act. Specific, evidence-based, includes the offer of same-day referral. With opt-out referral he&#39;s in unless he opts out.","next":"end"},
+            {"id":"c","label":"&#34;Have a think about it — come back if you decide you&#39;re ready.&#34;","class":"poor","feedback":"Defers the offer. The evidence is that the active offer matters — &#39;come back when ready&#39; loses most smokers in the gap.","next":null}
+          ]
+        },
+        {
+          "id":"end",
+          "prompt":"Wrap-up.",
+          "choices":[
+            {"id":"a","label":"You completed VBA in under three minutes, with permission, evidence and a same-day referral. Mr K leaves with a referral pending and a clearer picture. Document and follow up at his next appointment.","class":"preferred","feedback":"This is what the textbook conversation looks like. Real conversations rarely run as cleanly. The point of the exercise is the structure: ask permission, share evidence, make a specific offer.","next":null}
+          ]
+        }
+      ]
+    }'></div>
+
+    <div class="stage-foot">
+      <button class="btn secondary" data-stage-prev>Back</button>
+      <button class="btn" data-stage-complete="apply">Mark exercises done</button>
+    </div>
+  </div>
+
+  <!-- TEST -->
+  <div class="stage-panel" data-stage-panel="test">
+    <p>Ten questions. Rationale on every option. Score saved on this device.</p>
+
+    <div data-quiz="smoking" data-questions-id="smoking-quiz-data"
+      data-questions='[
+        {
+          "stem":"Approximately how much more likely are smokers to quit successfully when behavioural support is combined with pharmacotherapy compared with willpower alone?",
+          "options":[
+            {"label":"About 1.5×","correct":false,"why":"An understatement — the effect size is larger."},
+            {"label":"About 2×","correct":false,"why":"Closer, but the figure widely quoted from NICE NG209 and NCSCT is roughly threefold."},
+            {"label":"About 3×","correct":true,"why":"Correct. Combination behavioural support + pharmacotherapy roughly triples successful quitting compared with going it alone."},
+            {"label":"About 5×","correct":false,"why":"An overstatement; this would be hard to achieve in any single intervention."}
+          ]
+        },
+        {
+          "stem":"&#34;Combination NRT&#34; in NICE NG209 means:",
+          "options":[
+            {"label":"Two patches at the same time","correct":false,"why":"Doubling patches isn&#39;t what&#39;s meant; it isn&#39;t routinely used."},
+            {"label":"A long-acting form (e.g. patch) plus a short-acting form (e.g. gum, lozenge, spray, inhalator)","correct":true,"why":"Correct. The patch provides background nicotine through the day; the short-acting form addresses breakthrough cravings within minutes. More effective than single NRT."},
+            {"label":"NRT plus varenicline","correct":false,"why":"Combining different pharmacotherapies is not standard combination NRT."},
+            {"label":"NRT plus an e-cigarette","correct":false,"why":"Not what NICE means by &#34;combination NRT&#34;."}
+          ]
+        },
+        {
+          "stem":"For a pregnant woman who continues to smoke despite behavioural support, the preferred next step is:",
+          "options":[
+            {"label":"Continue with behavioural support alone for a further three months","correct":false,"why":"Delaying pharmacotherapy when smoking continues prolongs fetal exposure."},
+            {"label":"Offer NRT or vaping (per the woman&#39;s preference), after specialist discussion","correct":true,"why":"Correct. UK community services increasingly offer NRT and vaping as equal quit-aid options in pregnancy alongside specialist behavioural support — the priority is stopping smoking. NRT is licensed; vaping is unlicensed but supported. For NRT use the lowest effective dose; intermittent forms (gum, spray) are often preferred over 24-hr patches. Confirm specifics with the prescriber and follow your local pathway."},
+            {"label":"Offer varenicline","correct":false,"why":"Varenicline is not used in pregnancy."},
+            {"label":"Tell her to keep smoking but cut down","correct":false,"why":"Cutting down is not a substitute for stopping; compensatory smoking offsets much of the apparent reduction."}
+          ]
+        },
+        {
+          "stem":"Stopping smoking in someone taking clozapine matters because:",
+          "options":[
+            {"label":"Clozapine plasma levels fall, risking relapse","correct":false,"why":"The opposite. Tobacco smoke induces CYP1A2; stopping reduces induction and <em>raises</em> plasma clozapine."},
+            {"label":"Clozapine plasma levels rise, risking toxicity","correct":true,"why":"Correct. Tobacco smoke (not nicotine) induces CYP1A2. Stopping smoking removes that induction; plasma clozapine — and olanzapine — rise. The prescriber must be informed."},
+            {"label":"It increases the risk of withdrawal seizures from clozapine","correct":false,"why":"Not the relevant mechanism."},
+            {"label":"There is no clinically relevant interaction","correct":false,"why":"There is — and it&#39;s important enough to flag to the prescriber every time."}
+          ]
+        },
+        {
+          "stem":"Under NICE NG209, e-cigarettes:",
+          "options":[
+            {"label":"Are not recommended in any context","correct":false,"why":"They are recommended for adult smokers as a quit aid."},
+            {"label":"Are recommended for adult smokers as a quit aid; not for non-smokers or under-18s","correct":true,"why":"Correct. The position is supportive for adult smokers wanting to quit, while explicit that they should not be promoted to non-smokers or under-18s."},
+            {"label":"Are first-line above NRT","correct":false,"why":"They are not first-line; NRT remains the first-line option."},
+            {"label":"Are licensed medicines","correct":false,"why":"E-cigarettes are not licensed medicines in the UK; they are consumer products."}
+          ]
+        },
+        {
+          "stem":"CO monitoring at every antenatal appointment is:",
+          "options":[
+            {"label":"Optional, depending on local service","correct":false,"why":"It is national policy, not a local discretion."},
+            {"label":"National policy","correct":true,"why":"Correct. CO monitoring at every antenatal contact is national maternity policy. It supplements rather than replaces self-report."},
+            {"label":"Used only if smoking is suspected","correct":false,"why":"It&#39;s offered universally, not based on suspicion."},
+            {"label":"Replacing self-report","correct":false,"why":"It complements self-report rather than replacing it."}
+          ]
+        },
+        {
+          "stem":"People with severe mental illness die approximately how many years earlier than the general population, with smoking the largest single contributor?",
+          "options":[
+            {"label":"5–10 years","correct":false,"why":"An understatement compared with current UK figures."},
+            {"label":"10–15 years","correct":false,"why":"Closer, but the widely cited figure is 15–20 years."},
+            {"label":"15–20 years","correct":true,"why":"Correct. UK figures consistently cite around 15–20 years premature mortality, with smoking the largest single contributor."},
+            {"label":"25+ years","correct":false,"why":"Beyond what current UK figures show."}
+          ]
+        },
+        {
+          "stem":"The &#34;Act&#34; in Very Brief Advice for smoking is best implemented by:",
+          "options":[
+            {"label":"Telling them to stop and giving a leaflet","correct":false,"why":"Information without an offer of support is not the &#39;Act&#39;."},
+            {"label":"Offering a specific referral to a stop smoking service today, including opt-out where available","correct":true,"why":"Correct. Same-day, specific, and opt-out where supported. Uptake is substantially higher with opt-out."},
+            {"label":"Booking a follow-up appointment in 3 months","correct":false,"why":"Defers the offer; loses momentum."},
+            {"label":"Asking them to think about it","correct":false,"why":"Same problem — &#39;think about it&#39; is not an active offer."}
+          ]
+        },
+        {
+          "stem":"A CO reading of &gt;10 ppm in someone who tells you they don&#39;t smoke could also indicate:",
+          "options":[
+            {"label":"Lab error","correct":false,"why":"Possible but not the most useful answer here."},
+            {"label":"Recent meal","correct":false,"why":"Diet doesn&#39;t cause this kind of CO elevation."},
+            {"label":"Environmental CO exposure (e.g. faulty domestic appliance)","correct":true,"why":"Correct. CO can come from poorly serviced gas appliances. If the picture doesn&#39;t fit, consider a gas-safety check — this can be a safeguarding flag."},
+            {"label":"Anxiety","correct":false,"why":"Not a cause of CO elevation."}
+          ]
+        },
+        {
+          "stem":"A 67-year-old presents for a routine review. He says: &#34;I tried to quit twice last year and failed both times. I&#39;m not going to bother again.&#34; Best response:",
+          "options":[
+            {"label":"&#34;Most people don&#39;t succeed, so don&#39;t feel bad — we won&#39;t talk about it.&#34;","correct":false,"why":"Closes the door on a future attempt. MECC asks every contact, every time."},
+            {"label":"&#34;Two attempts is a lot of evidence about what works for you. Could we look at why those attempts ended and what might be different next time?&#34;","correct":true,"why":"Correct. Affirms effort, reframes past attempts as data, opens MI exploration without pressure."},
+            {"label":"&#34;Stopping is the single biggest thing you could do for your health — you really should try again.&#34;","correct":false,"why":"Technically true but it&#39;s the righting reflex; he&#39;s already told you he&#39;s exhausted."},
+            {"label":"&#34;Have you considered hypnotherapy?&#34;","correct":false,"why":"Hypnotherapy isn&#39;t recommended by NICE for smoking cessation; this isn&#39;t evidence-based first-line advice."}
+          ]
+        }
+      ]'>
+      <p class="small">The questions will appear here.</p>
+    </div>
+
+    <div class="stage-foot">
+      <button class="btn secondary" data-stage-prev>Back</button>
+      <button class="btn" data-stage-complete="test">Mark test done</button>
+    </div>
+  </div>
+
+  <!-- REFLECT -->
+  <div class="stage-panel" data-stage-panel="reflect">
+    <p>Three short prompts; saved to this device only. <strong>Do not enter identifiable patient information.</strong></p>
+
+    <label for="s-r1">1. Have you delivered (or watched someone deliver) VBA on smoking on placement? What went well, and what would have been sharper with what you've just read?</label>
+    <textarea id="s-r1" data-reflect="smoking:r1"></textarea>
+
+    <label for="s-r2">2. Which red-flag pathway (pregnancy / SMI / CYP / safeguarding) do you feel least confident about, and how will you address that before your next placement day?</label>
+    <textarea id="s-r2" data-reflect="smoking:r2"></textarea>
+
+    <label for="s-r3">3. Which theme of the NMC Code does this learning most connect to, and why?</label>
+    <textarea id="s-r3" data-reflect="smoking:r3"></textarea>
+
+    <div class="btn-row">
+      <button class="btn" data-reflect-save="smoking">Save</button>
+      <button class="btn secondary" data-reflect-copy="smoking">Copy to clipboard</button>
+    </div>
+
+    <div class="stage-foot">
+      <button class="btn secondary" data-stage-prev>Back</button>
+      <button class="btn ok" data-stage-complete="reflect">Mark module complete</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- FALLS — SUMMARY ONLY (v1 content, full module pending)       -->
+<!-- ============================================================ -->
+<section class="page" id="falls">
+  <div class="topic-head"><span class="crumb">Module 3 — topic</span><h1>Falls prevention</h1></div>
+  <div class="callout warn">
+    <h4>Summary only</h4>
+    <p>Below is a condensed reference. The full learning module (Objectives, Read, Apply, Test, Reflect) is in development.</p>
+  </div>
+
+  <h2>What good looks like</h2>
+  <p>Falls are not "just part of getting older". A community-based falls assessment uses a multifactorial approach to identify modifiable risk factors and offer evidence-based interventions — most centrally, structured strength and balance training.</p>
+
+  <h2>Evidence in 60 seconds</h2>
+  <ul>
+    <li>About 1 in 3 adults aged 65+ and 1 in 2 aged 80+ fall at least once a year. <span class="src">NICE CG161</span></li>
+    <li>Multifactorial assessment + targeted interventions reduces fall rate.</li>
+    <li>Strength and balance training (e.g. <strong>Otago</strong>, FaME) is the highest-evidence single intervention.</li>
+  </ul>
+
+  <h2>The multifactorial assessment — what to look for</h2>
+  <table>
+    <thead><tr><th>Domain</th><th>What to ask / observe</th></tr></thead>
+    <tbody>
+      <tr><td>Falls history</td><td>Number, mechanism, where, what they were doing, injuries, fear of falling</td></tr>
+      <tr><td>Gait &amp; balance</td><td>Timed Up and Go; able to stand from chair without arms?</td></tr>
+      <tr><td>Strength</td><td>Sit-to-stand x5; functional reach</td></tr>
+      <tr><td>Vision</td><td>Last sight test; bifocals on stairs (a known risk)</td></tr>
+      <tr><td>Cognition</td><td>4AT or similar if delirium suspected</td></tr>
+      <tr><td>Continence</td><td>Urgency &amp; nocturia drive night-time falls</td></tr>
+      <tr><td>Cardiovascular</td><td>Lying/standing BP — postural hypotension</td></tr>
+      <tr><td>Medications</td><td>Polypharmacy &gt;4; sedatives, opioids, antihypertensives, anticholinergics</td></tr>
+      <tr><td>Feet &amp; footwear</td><td>Pain, deformity, slippers without backs</td></tr>
+      <tr><td>Bone health</td><td>Previous fragility fracture; FRAX risk</td></tr>
+      <tr><td>Home environment</td><td>Lighting, rugs, stairs, bathroom</td></tr>
+      <tr><td>Alcohol</td><td>AUDIT-C screening may still be useful if alcohol could be contributing</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Red flags — escalate</h2>
+  <div class="callout danger">
+    <ul>
+      <li><strong>Head injury on anticoagulants</strong>: low threshold for A&amp;E.</li>
+      <li><strong>Loss of consciousness / collapse</strong>: not a "fall" — needs syncope work-up.</li>
+      <li><strong>Postural drop</strong> ≥20 mmHg systolic or ≥10 mmHg diastolic, especially with symptoms.</li>
+      <li><strong>Suspected fragility fracture</strong>: hip pain after a fall, inability to weight-bear, shortened/externally rotated leg.</li>
+      <li><strong>Acute confusion</strong> after a fall — consider delirium, intracranial bleed, sepsis.</li>
+      <li><strong>Frequent falls</strong> with new fatigue / breathlessness — consider cardiac cause, anaemia.</li>
+    </ul>
+  </div>
+  <div class="stage-foot">
+    <button class="btn ok" type="button" data-summary-review="falls">Mark summary reviewed</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- HEALTHY WEIGHT — SUMMARY ONLY                                -->
+<!-- ============================================================ -->
+<section class="page" id="weight">
+  <div class="topic-head"><span class="crumb">Module 4 — topic</span><h1>Healthy weight</h1></div>
+  <div class="callout warn">
+    <h4>Summary only</h4>
+    <p>Below is a condensed reference. The full learning module (Objectives, Read, Apply, Test, Reflect) is in development.</p>
+  </div>
+
+  <div class="callout">
+    <h4>How you talk about weight matters</h4>
+    <p>Weight stigma is a documented health harm and can drive avoidance of healthcare. Use neutral, person-first language. Ask before discussing weight. Focus on health behaviours rather than the number on the scale.</p>
+  </div>
+
+  <h2>BMI — with caveats</h2>
+  <table>
+    <thead><tr><th>BMI (kg/m²)</th><th>Category</th></tr></thead>
+    <tbody>
+      <tr><td>&lt;18.5</td><td>Underweight</td></tr>
+      <tr><td>18.5–24.9</td><td>Healthy</td></tr>
+      <tr><td>25.0–29.9</td><td>Overweight</td></tr>
+      <tr><td>30.0–34.9</td><td>Obesity class I</td></tr>
+      <tr><td>35.0–39.9</td><td>Obesity class II</td></tr>
+      <tr><td>≥40</td><td>Obesity class III</td></tr>
+    </tbody>
+  </table>
+  <ul>
+    <li><strong>Lower thresholds</strong> apply for adults of South Asian, Chinese, other Asian, Middle Eastern, Black African or African-Caribbean family background — overweight from <strong>23</strong> and obesity from <strong>27.5</strong>. <span class="src">NICE CG189 (2023 update)</span></li>
+    <li>BMI is a screening tool, not a diagnosis. Use waist-to-height ratio (aim &lt;0.5) as a complementary marker.</li>
+  </ul>
+
+  <h2>Tiered service model (England)</h2>
+  <table>
+    <tbody>
+      <tr><td><strong>Tier 1</strong></td><td>Universal MECC-level brief advice, signposting</td></tr>
+      <tr><td><strong>Tier 2</strong></td><td>Community lifestyle interventions (12-week behavioural)</td></tr>
+      <tr><td><strong>Tier 3</strong></td><td>Specialist multidisciplinary weight management service</td></tr>
+      <tr><td><strong>Tier 4</strong></td><td>Bariatric surgery</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Red flags</h2>
+  <div class="callout danger">
+    <ul>
+      <li><strong>Eating disorder features</strong> — restriction, binge-purge cycles, body-image distress, rapid weight loss. NICE NG69. Refer to mental health / specialist eating disorder service.</li>
+      <li><strong>Children / young people</strong>: NCMP letter pathway and trained school nurse / community paediatric services.</li>
+      <li><strong>Unintentional weight loss</strong> in older adults: think frailty, malignancy, depression, dementia.</li>
+      <li><strong>Pregnancy</strong>: separate guidance; do not aim for weight loss.</li>
+    </ul>
+  </div>
+  <div class="stage-foot">
+    <button class="btn ok" type="button" data-summary-review="weight">Mark summary reviewed</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- MENTAL HEALTH — SUMMARY ONLY                                 -->
+<!-- ============================================================ -->
+<section class="page" id="mental-health">
+  <div class="topic-head"><span class="crumb">Module 5 — topic</span><h1>Mental health &amp; wellbeing</h1></div>
+  <div class="callout warn">
+    <h4>Summary only</h4>
+    <p>Below is a condensed reference. The full learning module (Objectives, Read, Apply, Test, Reflect) is in development.</p>
+  </div>
+
+  <a href="#risk" class="risk-banner" data-nav><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg><span>Read the Risk &amp; escalation page first. <strong>If a client discloses suicidal thoughts now, stay with them and follow your service escalation pathway.</strong></span></a>
+
+  <h2>What "low intensity" means in community</h2>
+  <p>Most community public health work in mental health is at the <strong>identification, brief intervention and signposting</strong> level. You are not delivering therapy. You are: noticing distress, having a kind and skilled conversation, screening using validated tools where appropriate, and connecting people with the right service.</p>
+
+  <h2>Frameworks worth knowing</h2>
+  <ul>
+    <li><strong>5 Ways to Wellbeing</strong> — Connect, Be Active, Take Notice, Keep Learning, Give. Useful for low-intensity prompts. <span class="src">NEF / OHID</span></li>
+    <li><strong>NHS Talking Therapies (formerly IAPT)</strong> — self-referral primary-care service for common mental health problems.</li>
+    <li><strong>Stepped care</strong> — Step 1 recognition / psychoeducation; Step 2 low-intensity psychological interventions; Step 3 high-intensity therapy and/or medication; Step 4 crisis / specialist services.</li>
+  </ul>
+
+  <h2>Red flags — non-negotiable</h2>
+  <div class="callout danger">
+    <ul>
+      <li><strong>Suicidal ideation, plan, intent or means</strong> — see Risk &amp; escalation. Ask directly. Asking does not increase risk.</li>
+      <li><strong>Self-harm</strong> — assess medical need; signpost. NICE NG225 advises against using risk-stratification tools to gate care.</li>
+      <li><strong>Psychosis features</strong> — escalate to GP / crisis team.</li>
+      <li><strong>Perinatal mental health</strong> — pregnant or first 12 months postpartum — specific pathway; mental illness is a leading cause of maternal death.</li>
+      <li><strong>Children &amp; young people</strong> — separate pathways (CAMHS, school nurse, MHST).</li>
+    </ul>
+  </div>
+  <div class="stage-foot">
+    <button class="btn ok" type="button" data-summary-review="mental-health">Mark summary reviewed</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- RISK & ESCALATION                                            -->
+<!-- ============================================================ -->
+<section class="page" id="risk">
+  <div class="topic-head"><span class="crumb">Non-skippable</span><h1>Risk &amp; escalation</h1></div>
+
+  <div class="callout danger" role="alert">
+    <h4>If a person is in immediate danger</h4>
+    <p><strong>Call 999</strong>. Stay with them. Don't leave to fetch help unless leaving is necessary to <em>get</em> help.</p>
+  </div>
+
+  <p>This page is short on purpose. Read it now so you don't have to read it later.</p>
+
+  <h2>1. Suicide &amp; self-harm</h2>
+
+  <h3>Asking the question</h3>
+  <p>Use clear, direct language. Euphemisms create ambiguity.</p>
+  <ul>
+    <li>"Have you been having any thoughts of ending your life?"</li>
+    <li>"How often do those thoughts come?"</li>
+    <li>"Have you thought about how you might do it?" — this is asking about <em>plan</em>.</li>
+    <li>"Do you have access to [the means they mention]?" — asking about <em>means</em>.</li>
+    <li>"What's stopped you so far?" — protective factors.</li>
+  </ul>
+
+  <h3>What raises concern</h3>
+  <ul>
+    <li>Frequent or intrusive thoughts of suicide</li>
+    <li>A specific plan or rehearsed plan</li>
+    <li>Access to means (medication, ligature, weapons)</li>
+    <li>Recent loss, relationship breakdown, redundancy, criminal proceedings</li>
+    <li>Recent discharge from inpatient mental health care (highest-risk window)</li>
+    <li>Hopelessness, "everyone would be better off without me"</li>
+    <li>Sudden calm after agitation — may indicate decision made</li>
+    <li>Severe sleeplessness, command hallucinations</li>
+    <li>Substance use intoxication</li>
+    <li>Previous attempt — strongest single risk factor</li>
+  </ul>
+
+  <h3>What to do</h3>
+  <ol>
+    <li><strong>Stay calm and stay with them.</strong> Don't promise confidentiality you can't keep.</li>
+    <li><strong>If imminent risk</strong> — 999 / go to A&amp;E. Do not leave them alone if you can avoid it.</li>
+    <li><strong>If significant but not imminent</strong> — escalate to your practice supervisor / assessor immediately. Crisis team / 111 option 2 (NHS mental health crisis line). Same-day GP. Local authority adult social care if vulnerability concerns.</li>
+    <li><strong>Self-harm of any severity</strong> — assess medical need first; offer pathway in. NICE NG225: do not use risk-stratification scores to gate access.</li>
+    <li><strong>Safety planning</strong> (with someone trained, not solo as a student): a written plan listing warning signs, coping strategies, people/places that distract, people they can ask for help, professionals/agencies, means restriction.</li>
+    <li><strong>Document everything.</strong> What was said, in their words; what you assessed; what you did; what was agreed; who you escalated to; follow-up plan.</li>
+  </ol>
+  <p class="small">Source: NICE NG225 (Self-harm, 2022); Zero Suicide Alliance training; Samaritans guidance.</p>
+
+  <h2>2. Safeguarding adults <span class="src">Care Act 2014</span></h2>
+  <p>Section 42 of the Care Act 2014 places a duty on local authorities to make enquiries where an adult:</p>
+  <ol type="a">
+    <li>has needs for care and support, AND</li>
+    <li>is experiencing, or at risk of, abuse or neglect, AND</li>
+    <li>as a result of those needs is unable to protect themselves.</li>
+  </ol>
+  <p>Categories: physical, domestic (incl. coercive control), sexual, psychological, financial/material, modern slavery, discriminatory, organisational/institutional, neglect/acts of omission, self-neglect.</p>
+  <p><strong>What to do:</strong> Document specifics (verbatim where possible). Discuss with your supervisor today. Make a safeguarding referral to local authority adult social care per your service procedure. Mental Capacity Act applies — see below. Do not investigate yourself.</p>
+
+  <h2>3. Safeguarding children <span class="src">Children Act / Working Together</span></h2>
+  <p>If you are concerned that a child is at risk of significant harm:</p>
+  <ol>
+    <li>Discuss with your service's named safeguarding lead the same day.</li>
+    <li>Refer to local authority children's social care.</li>
+    <li>If a child is in immediate danger — <strong>999</strong>.</li>
+    <li>Document fully. Concerns about a colleague go to the Local Authority Designated Officer (LADO).</li>
+  </ol>
+  <p>Categories: physical, emotional, sexual, neglect (HM Government, <em>Working Together to Safeguard Children</em>, 2023). FGM disclosure for under-18s carries a mandatory reporting duty to police (Serious Crime Act 2015).</p>
+
+  <h2>4. Mental Capacity Act 2005 — the five principles</h2>
+  <ol>
+    <li>Presume capacity.</li>
+    <li>Help the person make their own decision before concluding they can't.</li>
+    <li>People are entitled to make unwise decisions.</li>
+    <li>Any act or decision made for someone lacking capacity must be in their best interests.</li>
+    <li>Choose the least restrictive option.</li>
+  </ol>
+  <p>Capacity is decision-specific and time-specific. The two-stage test: (1) is there an impairment of mind/brain? (2) does it mean they cannot understand, retain, weigh, or communicate the decision? You may need to flag a capacity concern to your supervisor; formal assessment is by an appropriate professional. Don't conflate "made a choice I disagree with" with "lacks capacity".</p>
+
+  <h2>5. Domestic abuse</h2>
+  <p>Coercive and controlling behaviour is a criminal offence (Serious Crime Act 2015). Routine enquiry only when alone and safely. Never ask in front of a partner or via a family-member translator. National Domestic Abuse Helpline (24h, free): <strong>0808 2000 247</strong>. MARAC referral via your service for high-risk cases (DASH risk indicator).</p>
+
+  <h2>6. Escalation — SBAR</h2>
+  <p>Any escalation phone call uses SBAR. Have your notes ready.</p>
+  <table>
+    <tbody>
+      <tr><td><strong>S</strong>ituation</td><td>Who you are, where, who the patient is, why you're calling.</td></tr>
+      <tr><td><strong>B</strong>ackground</td><td>Relevant history, current presentation.</td></tr>
+      <tr><td><strong>A</strong>ssessment</td><td>What you think is going on; what you've already done.</td></tr>
+      <tr><td><strong>R</strong>ecommendation</td><td>What you need from them — and by when.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <h4>Acknowledge</h4>
+    <p>Mark this page as read so you don't keep seeing the red banner. Re-reading is encouraged.</p>
+    <button class="btn" id="ack-btn" type="button">I have read this page</button>
+    <span class="ack-pill" id="ack-state">Not yet acknowledged</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- FLASHCARDS                                                   -->
+<!-- ============================================================ -->
+<section class="page" id="flashcards">
+  <div class="topic-head"><span class="crumb">Spaced retrieval</span><h1>Flashcards</h1></div>
+
+  <p>Short, mixed deck pulled from across the modules. Tap to flip. Rate how well you knew it — cards you find hard come back sooner. Aim for 5–10 cards per session; spacing beats cramming.</p>
+
+  <div id="fc-due" class="callout">Loading…</div>
+
+  <div id="fc-area"></div>
+
+  <div class="btn-row">
+    <button class="btn secondary" id="fc-reset">Reset all card spacing</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SOURCES                                                      -->
+<!-- ============================================================ -->
+<section class="page" id="sources">
+  <div class="topic-head"><span class="crumb">About</span><h1>Sources &amp; disclaimer</h1></div>
+
+  <h2>Disclaimer</h2>
+  <div class="callout warn">
+    <p><strong>This is a learning aid for student nurses on UK community public health placement. It is not a clinical decision-support tool. It does not replace:</strong></p>
+    <ul>
+      <li>your university's teaching and assessment;</li>
+      <li>the NMC Code and Standards;</li>
+      <li>your local Trust / Service / Local Authority policies;</li>
+      <li>the British National Formulary and SPCs for any medication;</li>
+      <li>the judgement of your practice supervisor / assessor and the wider team.</li>
+    </ul>
+    <p>Where local policy disagrees with anything written here, follow local policy. Guidance changes; the version date below is the date this file was last reviewed by a UK clinician.</p>
+  </div>
+
+  <p><strong>Last clinician review:</strong> <em>Pending — to be filled in by Alyson before sharing with students.</em></p>
+
+  <h2>Why I cite what I cite</h2>
+  <ol>
+    <li><strong>NICE</strong> — England's clinical and public health guideline body (NG = guideline; CG = older clinical guideline; PH = public health).</li>
+    <li><strong>NMC</strong> — regulator; Code and Standards.</li>
+    <li><strong>BNF</strong> — for any reference to medication classes (specific doses are out of scope here; always use the BNF).</li>
+    <li><strong>OHID / UKHSA / NHS England</strong> — current national policy and operational guidance.</li>
+    <li><strong>Statute</strong> — Mental Capacity Act 2005, Care Act 2014, Children Act 1989/2004, Serious Crime Act 2015.</li>
+    <li><strong>Original literature</strong> — for frameworks (e.g. Michie, Prochaska, Miller &amp; Rollnick).</li>
+  </ol>
+
+  <h2>Key references in this tool</h2>
+  <ul>
+    <li>NMC. <em>The Code</em> (2018, updated 2018).</li>
+    <li>NICE NG209. <em>Tobacco: preventing uptake, promoting quitting and treating dependence</em> (2021).</li>
+    <li>NICE CG161. <em>Falls in older people: assessing risk and prevention</em> (2013, last reviewed 2017).</li>
+    <li>NICE NG222. <em>Depression in adults: treatment and management</em> (2022).</li>
+    <li>NICE NG225. <em>Self-harm: assessment, management and preventing recurrence</em> (2022).</li>
+    <li>NICE CG189. <em>Obesity: identification, assessment and management</em> (2014, ethnicity surveillance update 2023).</li>
+    <li>NICE NG7. <em>Preventing excess weight gain</em> (2015).</li>
+    <li>NICE NG69. <em>Eating disorders: recognition and treatment</em> (2017).</li>
+    <li>OHID. <em>Making Every Contact Count (MECC) implementation guide</em>.</li>
+    <li>NCSCT. <em>Very Brief Advice on Smoking</em> training module.</li>
+    <li>Royal College of Physicians. <em>National Early Warning Score (NEWS) 2</em> (2017, updated 2020).</li>
+    <li>Miller WR, Rollnick S. <em>Motivational Interviewing: Helping People Change</em>, 3rd ed. (Guilford Press, 2013).</li>
+    <li>Michie S, van Stralen MM, West R. The behaviour change wheel. <em>Implementation Science</em> 2011;6:42.</li>
+    <li>Prochaska JO, DiClemente CC. Stages and processes of self-change of smoking. <em>J Consult Clin Psychol</em> 1983;51(3):390–5.</li>
+    <li>Marmot M et al. <em>Health Equity in England: The Marmot Review 10 Years On</em> (Institute of Health Equity, 2020).</li>
+    <li>NHS England. <em>Core20PLUS5 — adults</em> (2021); <em>CYP</em> (2022).</li>
+    <li>HM Government. <em>Working Together to Safeguard Children</em> (2023).</li>
+    <li>Care Act 2014; Mental Capacity Act 2005; Children Act 1989/2004; Serious Crime Act 2015.</li>
+  </ul>
+
+  <h2 id="feedback">Spot an error? Report it</h2>
+  <p>If something here is wrong, out of date, or unclear, please flag it. Quick, simple form — it builds an email you send to your placement educator who maintains the tool. Nothing is auto-sent; you'll see the email before it leaves.</p>
+
+  <div class="card">
+    <label for="fb-page">Which page / section?</label>
+    <input type="text" id="fb-page" placeholder="e.g. Smoking → Read → Pharmacotherapy" style="width:100%; min-height:44px; padding:10px 12px; border:1px solid var(--line); border-radius:var(--radius); background:var(--surface); color:var(--ink); font:inherit;">
+
+    <label for="fb-issue">What's the issue?</label>
+    <textarea id="fb-issue" placeholder="What does it currently say? What should it say?"></textarea>
+
+    <label for="fb-source">Source / evidence (if you have one)</label>
+    <textarea id="fb-source" placeholder="e.g. NICE NG209 §1.10, current NHS service pathway, BNF entry, etc."></textarea>
+
+    <label for="fb-name">Your name (optional)</label>
+    <input type="text" id="fb-name" placeholder="So we can credit / follow up — optional" style="width:100%; min-height:44px; padding:10px 12px; border:1px solid var(--line); border-radius:var(--radius); background:var(--surface); color:var(--ink); font:inherit;">
+
+    <div class="btn-row">
+      <button class="btn" id="fb-send" type="button">Open email to send</button>
+      <button class="btn secondary" id="fb-copy" type="button">Copy as plain text instead</button>
+    </div>
+    <p class="small">The email opens in your phone or computer's default mail app. <strong>Do not include identifiable patient information.</strong> If your device has no email app set up, use the "Copy as plain text" option and paste it wherever suits (e.g. a message to your educator).</p>
+  </div>
+
+  <h2>Privacy</h2>
+  <p>Everything you type into reflection, exercises and feedback is stored in this browser only (localStorage). Nothing is sent anywhere automatically — even the feedback form just opens your email app with the text pre-filled, so you choose whether to send. Closing or clearing your browser data will remove your saved work. <strong>Do not type identifiable patient information.</strong></p>
+
+  <div class="callout info">
+    <h4>Recommended for tomorrow</h4>
+    <p>Use this as a local file on a trusted device rather than uploading it to a public web host. That keeps the tool private while still allowing the student to use all of the learning activities.</p>
+  </div>
+  <div class="card">
+    <h3>Local device controls</h3>
+    <p class="small">If this device has been used for practice entries already, you can reset all learner progress, notes and reviewed states before handing it over.</p>
+    <div class="btn-row">
+      <button class="btn danger" id="clear-local-data" type="button">Reset all learner progress on this device</button>
+      <button class="btn secondary" id="print-workbook" type="button">Print workbook</button>
+    </div>
+    <p class="small" id="clear-local-data-status" aria-live="polite"></p>
+  </div>
+
+  <footer class="disclaimer">
+    <p><strong>Local/private copy prepared for use on 1 May 2026.</strong></p>
+    <p><strong>Placement Companion v0.3</strong> · Built for student nurses on UK community public health placement · Reviewed: <em>(pending — Alyson)</em> · Re-review interval: 12 months or sooner if NICE updates a cited guideline.</p>
+    <p>If you find an error, please <a href="#sources" data-feedback-nav>flag it here</a> so the tool can be corrected.</p>
+  </footer>
+</section>
+
+</main>
+</div>
+
+<script type="application/json" id="toolkit-quiz-data">
+[
+  {
+    "stem": "Which of the following is the correct order for Very Brief Advice?",
+    "options": [
+      { "label": "Acknowledge, Advise, Act", "correct": false, "why": "Acknowledge is not the formal first step. The model is Ask, advise, act." },
+      { "label": "Ask, Advise, Act", "correct": true, "why": "Correct. VBA is ask, advise, act." },
+      { "label": "Approach, Assess, Advise", "correct": false, "why": "This mixes VBA with broader assessment language." },
+      { "label": "Ask, Advise, Action plan", "correct": false, "why": "The third step is the active offer of support, not a full action-planning intervention." }
+    ]
+  },
+  {
+    "stem": "A client says: \"I want to stop smoking but evenings are when I really struggle.\" This is best classified as:",
+    "options": [
+      { "label": "Sustain talk", "correct": false, "why": "There is sustain talk in it, but it also includes clear change talk." },
+      { "label": "Pre-contemplation", "correct": false, "why": "They have already stated a desire to change." },
+      { "label": "Change talk with ambivalence", "correct": true, "why": "Correct. It contains both desire to change and the obstacle that makes change hard." },
+      { "label": "Resistance", "correct": false, "why": "MI treats this as ambivalence to explore, not resistance to confront." }
+    ]
+  },
+  {
+    "stem": "Which OARS skill helps avoid the righting reflex of giving advice too early?",
+    "options": [
+      { "label": "Open questions", "correct": false, "why": "Helpful, but not the main antidote on their own." },
+      { "label": "Affirmations", "correct": false, "why": "Affirmations reinforce strengths but do not directly slow advice-giving." },
+      { "label": "Reflections", "correct": true, "why": "Correct. Reflections slow the conversation and hand the work back to the person." },
+      { "label": "Summaries", "correct": false, "why": "Summaries are useful, but reflections are the core antidote here." }
+    ]
+  },
+  {
+    "stem": "Mr A knows about diabetes risk and wants to lose weight. He's a long-distance lorry driver who eats at service stations and has no fridge in his cab. In COM-B terms, the dominant barrier is:",
+    "options": [
+      { "label": "Capability", "correct": false, "why": "Knowledge is present, so capability is not the dominant missing piece." },
+      { "label": "Opportunity", "correct": true, "why": "Correct. The environment does not make the behaviour easy or realistic." },
+      { "label": "Motivation", "correct": false, "why": "He wants to lose weight, so motivation is present." },
+      { "label": "Cannot tell from the information given", "correct": false, "why": "The case gives enough to identify opportunity as the main barrier." }
+    ]
+  },
+  {
+    "stem": "A client in the Action stage of change is best supported by:",
+    "options": [
+      { "label": "Planting seeds and validating", "correct": false, "why": "That fits pre-contemplation." },
+      { "label": "Exploring ambivalence", "correct": false, "why": "That is more typical of contemplation." },
+      { "label": "Reinforcing, troubleshooting and planning for triggers", "correct": true, "why": "Correct. Once someone has started, support focuses on sustaining change and managing high-risk moments." },
+      { "label": "Crisis-level escalation", "correct": false, "why": "Nothing here suggests crisis." }
+    ]
+  },
+  {
+    "stem": "The Marmot review is most useful in community public health practice because it:",
+    "options": [
+      { "label": "Provides specific clinical thresholds for risk assessment", "correct": false, "why": "It is not a clinical thresholds document." },
+      { "label": "Frames health outcomes as shaped by social determinants", "correct": true, "why": "Correct. Marmot gives the social-determinants lens." },
+      { "label": "Sets out NMC standards for proficiency", "correct": false, "why": "NMC standards are separate documents." },
+      { "label": "Lists the duties under the Care Act 2014", "correct": false, "why": "Those come from statute, not Marmot." }
+    ]
+  },
+  {
+    "stem": "NHS Core20PLUS5 focuses on:",
+    "options": [
+      { "label": "The five public health priorities of the Long Term Plan", "correct": false, "why": "It is more specific than that." },
+      { "label": "The 20 most deprived areas in England plus 5 healthcare deserts", "correct": false, "why": "It refers to the most deprived 20% of the population, not 20 areas." },
+      { "label": "The most deprived 20% of the population, plus locally identified groups, against five clinical priorities", "correct": true, "why": "Correct. That is the Core20PLUS5 structure." },
+      { "label": "A staffing-ratio framework", "correct": false, "why": "It is a health-inequalities framework, not a workforce model." }
+    ]
+  },
+  {
+    "stem": "Sustain talk in motivational interviewing is best understood as:",
+    "options": [
+      { "label": "Resistance that should be confronted", "correct": false, "why": "Confronting it usually entrenches it." },
+      { "label": "Information about ambivalence", "correct": true, "why": "Correct. Sustain talk tells you what is keeping the person stuck." },
+      { "label": "A reason to refer onwards", "correct": false, "why": "It is normal in behaviour-change conversations." },
+      { "label": "Evidence the person does not want help", "correct": false, "why": "People often want help and still voice sustain talk." }
+    ]
+  },
+  {
+    "stem": "Which of these is an example of an open question that fits MI?",
+    "options": [
+      { "label": "\"Don't you think you should cut down?\"", "correct": false, "why": "That is leading and judgemental." },
+      { "label": "\"Do you smoke?\"", "correct": false, "why": "Useful for status, but it is a closed question." },
+      { "label": "\"What's a typical day like for your eating?\"", "correct": true, "why": "Correct. It invites a fuller answer and gives useful context." },
+      { "label": "\"Have you tried Slimming World?\"", "correct": false, "why": "That slips into advice and a closed question." }
+    ]
+  },
+  {
+    "stem": "In community public health practice, the inequalities lens means that before offering behaviour-change advice you should:",
+    "options": [
+      { "label": "Wait until you have completed a full social history before saying anything", "correct": false, "why": "Too restrictive. VBA is brief by design." },
+      { "label": "Ask what is going on for the person because context shapes which advice is useful", "correct": true, "why": "Correct. Context changes what support is realistic and useful." },
+      { "label": "Offer the same evidence-based advice to everyone regardless of context", "correct": false, "why": "That ignores different opportunities and constraints." },
+      { "label": "Refer all socioeconomically deprived clients to specialist services", "correct": false, "why": "That is not what the inequalities lens means." }
+    ]
+  }
+]
+</script>
+<script type="application/json" id="smoke-triage-bins">
+[
+  { "id": "maternal", "label": "Specialist maternal stop smoking" },
+  { "id": "smi", "label": "SMI pathway + flag prescriber" },
+  { "id": "cyp", "label": "CYP pathway" },
+  { "id": "general", "label": "General Stop Smoking Service" },
+  { "id": "safeguard", "label": "Safeguarding" }
+]
+</script>
+<script type="application/json" id="smoke-triage-items">
+[
+  { "text": "Pregnant 14 weeks, smokes 8/day, never tried to quit before.", "answer": "maternal", "why": "Pregnancy means the specialist maternal pathway." },
+  { "text": "35yo with schizophrenia, on clozapine 400 mg/day, smokes 30/day, says he wants to quit.", "answer": "smi", "why": "Stopping smoking can raise clozapine levels, so the prescriber must be flagged." },
+  { "text": "15yo found vaping in school, has never smoked tobacco.", "answer": "cyp", "why": "This needs a children and young people pathway, not the adult service." },
+  { "text": "67yo with COPD, smokes 20/day for 50 years, ready to try again after two previous quits.", "answer": "general", "why": "This fits the general stop smoking service with evidence-based quit support." },
+  { "text": "40yo dad of three, smokes around the children at home and the children are showing recurrent respiratory symptoms.", "answer": "safeguard", "why": "This is both a smoking issue and a safeguarding concern." }
+]
+</script>
+<script type="application/json" id="smoke-myth-bins">
+[
+  { "id": "T", "label": "True" },
+  { "id": "F", "label": "False" }
+]
+</script>
+<script type="application/json" id="smoke-myth-items">
+[
+  { "text": "Vaping is just as harmful as smoking.", "answer": "F", "why": "False. Vaping is substantially less harmful than smoking, though not harmless." },
+  { "text": "NRT just keeps you addicted to nicotine.", "answer": "F", "why": "False. NRT delivers nicotine without the toxic smoke from tobacco." },
+  { "text": "You can't use NRT in pregnancy.", "answer": "F", "why": "False. NRT is licensed in pregnancy and often used with specialist support." },
+  { "text": "For people with severe mental illness, stopping smoking can affect their psychiatric medication levels.", "answer": "T", "why": "True. Tobacco smoke affects CYP1A2, which matters especially for clozapine and olanzapine." },
+  { "text": "\"Cutting down\" from 20 to 10 a day halves cardiovascular risk.", "answer": "F", "why": "False. Compensatory smoking means risk does not fall in direct proportion to count." },
+  { "text": "Asking patients about smoking at every contact is recommended even if they've declined help before.", "answer": "T", "why": "True. MECC means every contact, every time." }
+]
+</script>
+<script type="application/json" id="smoke-scenario-data">
+{
+  "vignette": "Mr K, 52, new to the practice. FEV1 65% predicted (moderate COPD). Smokes 15/day, says: \"I've cut down from 25 - that's better, right?\" Pleasant, slightly defensive. You have 10 minutes.",
+  "steps": [
+    {
+      "id": "s1",
+      "prompt": "What do you say first?",
+      "choices": [
+        { "id": "a", "label": "\"Cutting down doesn't really help. You need to stop completely.\"", "class": "poor", "feedback": "Technically the evidence is on your side, but the delivery triggers the righting reflex and risks disengagement.", "next": null },
+        { "id": "b", "label": "\"Yes, well done - keep going.\"", "class": "suboptimal", "feedback": "Affirming effort is useful, but this risks false reassurance about the harm reduction from cutting down alone.", "next": null },
+        { "id": "c", "label": "\"Cutting down is a good first step. Can I share what we know about cutting down vs stopping?\"", "class": "preferred", "feedback": "This affirms effort, asks permission, and opens an evidence-based conversation.", "next": "s2" }
+      ]
+    },
+    {
+      "id": "s2",
+      "prompt": "He says yes. He asks: \"Why doesn't cutting down work as well?\"",
+      "choices": [
+        { "id": "a", "label": "\"It does - half the cigarettes is half the harm.\"", "class": "poor", "feedback": "Misleading. Risk does not fall in direct proportion to cigarette count.", "next": null },
+        { "id": "b", "label": "\"People often inhale more deeply or smoke each one more thoroughly. The risk doesn't drop as much as the count.\"", "class": "preferred", "feedback": "Accurate and understandable explanation of compensatory smoking.", "next": "s3" },
+        { "id": "c", "label": "\"Cutting down has been shown to be useless.\"", "class": "poor", "feedback": "Too strong and inaccurate. Cutting down can still be a step toward stopping.", "next": null }
+      ]
+    },
+    {
+      "id": "s3",
+      "prompt": "He's thoughtful. \"OK. So what do you suggest?\"",
+      "choices": [
+        { "id": "a", "label": "\"Just keep working on cutting down - try not to smoke before noon.\"", "class": "suboptimal", "feedback": "That misses the active offer of effective treatment and support.", "next": null },
+        { "id": "b", "label": "\"The most effective route is our local Stop Smoking Service plus stop-smoking medicines together - about three times more likely to work than going it alone. I can refer you today, would that be okay?\"", "class": "preferred", "feedback": "This is a clean VBA Act step: specific, evidence-based, and offered today.", "next": "end" },
+        { "id": "c", "label": "\"Have a think about it - come back if you decide you're ready.\"", "class": "poor", "feedback": "Deferring the offer loses momentum and uptake.", "next": null }
+      ]
+    },
+    {
+      "id": "end",
+      "prompt": "Wrap-up.",
+      "choices": [
+        { "id": "a", "label": "You completed VBA in under three minutes, with permission, evidence and a same-day referral. Mr K leaves with a referral pending and a clearer picture. Document and follow up at his next appointment.", "class": "preferred", "feedback": "That is the structure the scenario is trying to build.", "next": null }
+      ]
+    }
+  ]
+}
+</script>
+<script type="application/json" id="smoking-quiz-data">
+[
+  {
+    "stem": "Approximately how much more likely are smokers to quit successfully when behavioural support is combined with pharmacotherapy compared with willpower alone?",
+    "options": [
+      { "label": "About 1.5x", "correct": false, "why": "That understates the usual effect size." },
+      { "label": "About 2x", "correct": false, "why": "Closer, but the commonly cited figure is around threefold." },
+      { "label": "About 3x", "correct": true, "why": "Correct. Combination behavioural support plus pharmacotherapy roughly triples success rates." },
+      { "label": "About 5x", "correct": false, "why": "That overstates the usual effect size." }
+    ]
+  },
+  {
+    "stem": "Combination NRT in NICE NG209 means:",
+    "options": [
+      { "label": "Two patches at the same time", "correct": false, "why": "That is not what is meant by combination NRT." },
+      { "label": "A long-acting form plus a short-acting form", "correct": true, "why": "Correct. A patch gives background cover and a short-acting product treats breakthrough cravings." },
+      { "label": "NRT plus varenicline", "correct": false, "why": "That is not the standard definition of combination NRT." },
+      { "label": "NRT plus an e-cigarette", "correct": false, "why": "Not what NICE means by combination NRT." }
+    ]
+  },
+  {
+    "stem": "For a pregnant woman who continues to smoke despite behavioural support, the preferred next step is:",
+    "options": [
+      { "label": "Continue with behavioural support alone for a further three months", "correct": false, "why": "That prolongs ongoing smoke exposure." },
+      { "label": "Offer NRT or vaping, based on preference and specialist discussion", "correct": true, "why": "Correct. Many services offer both as quit-aid options alongside specialist behavioural support." },
+      { "label": "Offer varenicline", "correct": false, "why": "Varenicline is not used in pregnancy." },
+      { "label": "Tell her to keep smoking but cut down", "correct": false, "why": "Cutting down is not a substitute for stopping." }
+    ]
+  },
+  {
+    "stem": "Stopping smoking in someone taking clozapine matters because:",
+    "options": [
+      { "label": "Clozapine plasma levels fall, risking relapse", "correct": false, "why": "The opposite is true." },
+      { "label": "Clozapine plasma levels rise, risking toxicity", "correct": true, "why": "Correct. Removing smoke exposure can rapidly raise clozapine levels." },
+      { "label": "It increases the risk of withdrawal seizures from clozapine", "correct": false, "why": "That is not the key mechanism." },
+      { "label": "There is no clinically relevant interaction", "correct": false, "why": "There is a major clinically relevant interaction." }
+    ]
+  },
+  {
+    "stem": "Under NICE NG209, e-cigarettes:",
+    "options": [
+      { "label": "Are not recommended in any context", "correct": false, "why": "They are recommended for adult smokers as a quit aid." },
+      { "label": "Are recommended for adult smokers as a quit aid, but not for non-smokers or under-18s", "correct": true, "why": "Correct. That is the evidence-based position." },
+      { "label": "Are first-line above NRT", "correct": false, "why": "They are not placed above first-line NRT." },
+      { "label": "Are licensed medicines", "correct": false, "why": "They are not licensed medicines in the UK." }
+    ]
+  },
+  {
+    "stem": "CO monitoring at every antenatal appointment is:",
+    "options": [
+      { "label": "Optional, depending on local service", "correct": false, "why": "It is national maternity policy." },
+      { "label": "National policy", "correct": true, "why": "Correct. It is routine national policy." },
+      { "label": "Used only if smoking is suspected", "correct": false, "why": "It is not suspicion-based." },
+      { "label": "Replacing self-report", "correct": false, "why": "It supplements self-report." }
+    ]
+  },
+  {
+    "stem": "People with severe mental illness die approximately how many years earlier than the general population, with smoking the largest single contributor?",
+    "options": [
+      { "label": "5-10 years", "correct": false, "why": "That understates the usual figure." },
+      { "label": "10-15 years", "correct": false, "why": "Closer, but still low." },
+      { "label": "15-20 years", "correct": true, "why": "Correct. That is the commonly cited UK figure." },
+      { "label": "25+ years", "correct": false, "why": "That overstates the figure." }
+    ]
+  },
+  {
+    "stem": "The Act in Very Brief Advice for smoking is best implemented by:",
+    "options": [
+      { "label": "Telling them to stop and giving a leaflet", "correct": false, "why": "That is not an active offer of support." },
+      { "label": "Offering a specific referral to a stop smoking service today, including opt-out where available", "correct": true, "why": "Correct. The key is a specific same-day offer." },
+      { "label": "Booking a follow-up appointment in three months", "correct": false, "why": "That defers the offer too much." },
+      { "label": "Asking them to think about it", "correct": false, "why": "That is not active enough." }
+    ]
+  },
+  {
+    "stem": "A CO reading above 10 ppm in someone who tells you they do not smoke could also indicate:",
+    "options": [
+      { "label": "Lab error", "correct": false, "why": "Possible, but not the best clinical explanation here." },
+      { "label": "Recent meal", "correct": false, "why": "Diet does not explain this." },
+      { "label": "Environmental CO exposure such as a faulty domestic appliance", "correct": true, "why": "Correct. This can be an important safety and safeguarding clue." },
+      { "label": "Anxiety", "correct": false, "why": "Anxiety does not cause CO elevation." }
+    ]
+  },
+  {
+    "stem": "A 67-year-old says: \"I tried to quit twice last year and failed both times. I'm not going to bother again.\" Best response:",
+    "options": [
+      { "label": "\"Most people don't succeed, so don't feel bad - we won't talk about it.\"", "correct": false, "why": "That closes the door on future change." },
+      { "label": "\"Two attempts is a lot of evidence about what works for you. Could we look at why those attempts ended and what might be different next time?\"", "correct": true, "why": "Correct. It affirms effort and opens a constructive MI-style conversation." },
+      { "label": "\"Stopping is the single biggest thing you could do for your health - you really should try again.\"", "correct": false, "why": "True, but too much like the righting reflex in this moment." },
+      { "label": "\"Have you considered hypnotherapy?\"", "correct": false, "why": "Not an evidence-based first-line option in NICE guidance." }
+    ]
+  }
+]
+</script>
+
+<script>
+(() => {
+  // ====================================================================
+  // CONFIG — edit these before sharing the tool with students
+  // ====================================================================
+  const CONFIG = {
+    // Email address that receives "Report a correction" submissions.
+    // Leave blank for copy-only mode, or add your own address before sharing.
+    FEEDBACK_EMAIL: '',
+    // Subject prefix used in the feedback mailto link.
+    FEEDBACK_SUBJECT_PREFIX: '[Placement Companion] Correction —'
+  };
+  // ====================================================================
+
+  // ========== State ==========
+  const STORAGE_PREFIX = 'pc.v2.';
+  const sget = k => localStorage.getItem(STORAGE_PREFIX + k);
+  const sset = (k, v) => localStorage.setItem(STORAGE_PREFIX + k, v);
+  const srem = k => localStorage.removeItem(STORAGE_PREFIX + k);
+  const sjget = k => { try { return JSON.parse(sget(k) || 'null'); } catch (e) { return null; } };
+  const sjset = (k, v) => sset(k, JSON.stringify(v));
+
+  function getModuleState(modId) {
+    return sjget('mod.' + modId) || { obj: false, read: false, apply: false, test: false, reflect: false, score: null };
+  }
+  function setModuleState(modId, state) { sjset('mod.' + modId, state); }
+  function modulePct(state) {
+    const stages = ['obj','read','apply','test','reflect'];
+    const done = stages.filter(s => state[s]).length;
+    return Math.round((done / stages.length) * 100);
+  }
+  function getSummaryState(id) {
+    return sjget('summary.' + id) || { reviewed: false };
+  }
+  function setSummaryState(id, state) {
+    sjset('summary.' + id, state);
+  }
+  function readJsonConfig(el, datasetKey) {
+    const idKey = datasetKey + 'Id';
+    const scriptId = el.dataset[idKey];
+    if (scriptId) {
+      const scriptEl = document.getElementById(scriptId);
+      if (scriptEl) return JSON.parse(scriptEl.textContent);
+    }
+    const inline = el.dataset[datasetKey];
+    if (inline) return JSON.parse(inline);
+    throw new Error(`Missing config for ${datasetKey}`);
+  }
+
+  // ========== Routing ==========
+  const pages = Array.from(document.querySelectorAll('section.page'));
+  const navLinks = Array.from(document.querySelectorAll('[data-nav]'));
+  const feedbackLinks = Array.from(document.querySelectorAll('[data-feedback-nav]'));
+  const navEl = document.getElementById('primary-nav');
+  const menuBtn = document.getElementById('menu-btn');
+
+  function showPage(id) {
+    if (!id || !document.getElementById(id)) id = 'home';
+    pages.forEach(p => p.classList.toggle('active', p.id === id));
+    navLinks.forEach(a => {
+      const target = (a.getAttribute('href') || '').replace('#','');
+      if (a.closest('nav')) {
+        if (target === id) a.setAttribute('aria-current','page');
+        else a.removeAttribute('aria-current');
+      }
+    });
+    window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+    if (window.innerWidth < 760) {
+      navEl.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded','false');
+    }
+    document.title = id === 'home'
+      ? 'Placement Companion'
+      : 'Placement Companion — ' + (document.querySelector('#'+id+' h1')?.textContent || id);
+
+    // Refresh dynamic content per-page
+    if (id === 'home') paintDashboard();
+    if (id === 'flashcards') paintFlashcards();
+    if (id === 'sources') maybePrefillFeedbackPage();
+    // Module page: render quizzes / paint progress
+    const sec = document.getElementById(id);
+    if (sec && sec.dataset.module) {
+      paintModuleProgress(sec.dataset.module);
+    }
+    // Track for the "Report a correction on this page" link
+    trackLastPage(id);
+    // Inject per-page "Report a correction" footer link if not present
+    injectReportLink(id);
+  }
+
+  function injectReportLink(id) {
+    if (id === 'sources' || id === 'home') return;
+    const sec = document.getElementById(id);
+    if (!sec) return;
+    if (sec.querySelector('.report-link')) return;
+    const a = document.createElement('a');
+    a.className = 'report-link';
+    a.href = '#sources#feedback';
+    a.dataset.nav = '';
+    a.textContent = 'Spot an error on this page? Report a correction →';
+    a.style.cssText = 'display:block; margin:24px 0 0; padding:10px 0; border-top:1px solid var(--line); font-size:.9rem; color:var(--ink-muted); text-align:center;';
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const title = sec.querySelector('h1')?.textContent || id;
+      sessionStorage.setItem('pc.lastpage', title);
+      location.hash = '#sources';
+      // After navigation, scroll to the feedback section
+      setTimeout(() => {
+        const fb = document.getElementById('feedback');
+        if (fb) fb.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50);
+    });
+    sec.appendChild(a);
+  }
+
+  function currentId() { return (location.hash || '#home').slice(1); }
+  window.addEventListener('hashchange', () => showPage(currentId()));
+
+  function openFeedbackArea() {
+    location.hash = '#sources';
+    setTimeout(() => {
+      const fb = document.getElementById('feedback');
+      if (fb) fb.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 50);
+  }
+
+  feedbackLinks.forEach(a => a.addEventListener('click', e => {
+    e.preventDefault();
+    openFeedbackArea();
+  }));
+
+  menuBtn.addEventListener('click', () => {
+    const open = navEl.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', String(open));
+  });
+
+  // ========== Search ==========
+  const q = document.getElementById('q');
+  const out = document.getElementById('search-results');
+  const index = pages.map(p => {
+    const h1 = p.querySelector('h1')?.textContent || p.id;
+    const text = p.innerText.replace(/\s+/g, ' ').trim();
+    return { id: p.id, title: h1, text: text };
+  });
+  function escHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+  }
+  function snippet(text, term) {
+    const i = text.toLowerCase().indexOf(term.toLowerCase());
+    if (i < 0) return text.slice(0, 140) + '…';
+    const start = Math.max(0, i - 60);
+    const end = Math.min(text.length, i + term.length + 80);
+    const before = (start > 0 ? '…' : '') + escHtml(text.slice(start, i));
+    const hit = '<em>' + escHtml(text.slice(i, i + term.length)) + '</em>';
+    const after = escHtml(text.slice(i + term.length, end)) + (end < text.length ? '…' : '');
+    return before + hit + after;
+  }
+  let timer;
+  q.addEventListener('input', () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      const term = q.value.trim();
+      if (term.length < 2) { out.hidden = true; out.innerHTML = ''; return; }
+      const t = term.toLowerCase();
+      const hits = index
+        .map(p => ({ ...p, score: (p.title.toLowerCase().includes(t) ? 5 : 0) + (p.text.toLowerCase().split(t).length - 1) }))
+        .filter(p => p.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 8);
+      if (!hits.length) {
+        out.hidden = false;
+        out.innerHTML = '<div class="hit"><b>No results.</b><br><small>Try MECC, OARS, COM-B, NRT, AUDIT, NICE, NEWS2.</small></div>';
+        return;
+      }
+      out.hidden = false;
+      out.innerHTML = hits.map(h =>
+        `<a class="hit" href="#${h.id}" data-nav><b>${escHtml(h.title)}</b><br><small>${snippet(h.text, term)}</small></a>`
+      ).join('');
+      out.querySelectorAll('[data-nav]').forEach(a => a.addEventListener('click', () => {
+        out.hidden = true; out.innerHTML = ''; q.value = '';
+      }));
+    }, 120);
+  });
+
+  // ========== Module: stage tabs ==========
+  document.querySelectorAll('section.page[data-module]').forEach(section => {
+    const modId = section.dataset.module;
+    const tabs = Array.from(section.querySelectorAll('.stage-btn'));
+    const panels = Array.from(section.querySelectorAll('.stage-panel'));
+    function activateStage(stageId) {
+      tabs.forEach(t => t.setAttribute('aria-selected', t.dataset.stage === stageId ? 'true' : 'false'));
+      panels.forEach(p => p.classList.toggle('active', p.dataset.stagePanel === stageId));
+      // scroll up on tab change
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    tabs.forEach(t => t.addEventListener('click', () => activateStage(t.dataset.stage)));
+    section.querySelectorAll('[data-stage-prev]').forEach(b => b.addEventListener('click', () => {
+      const order = ['obj','read','apply','test','reflect'];
+      const cur = section.querySelector('.stage-panel.active')?.dataset.stagePanel || 'obj';
+      const i = order.indexOf(cur);
+      if (i > 0) activateStage(order[i-1]);
+    }));
+    section.querySelectorAll('[data-stage-complete]').forEach(b => b.addEventListener('click', () => {
+      const stage = b.dataset.stageComplete;
+      const state = getModuleState(modId);
+      state[stage] = true;
+      setModuleState(modId, state);
+      paintModuleProgress(modId);
+      const order = ['obj','read','apply','test','reflect'];
+      const i = order.indexOf(stage);
+      if (i < order.length - 1) activateStage(order[i+1]);
+    }));
+  });
+
+  function paintModuleProgress(modId) {
+    const state = getModuleState(modId);
+    const pct = modulePct(state);
+    document.querySelectorAll(`[data-mod-progress="${modId}"]`).forEach(el => el.style.width = pct + '%');
+    document.querySelectorAll(`[data-mod-pct="${modId}"]`).forEach(el => el.textContent = pct + '%');
+    ['obj','read','apply','test','reflect'].forEach(s => {
+      document.querySelectorAll(`[data-mod-dot="${modId}:${s}"]`).forEach(el => {
+        const btn = el.closest('.stage-btn');
+        if (btn) btn.dataset.done = state[s] ? 'true' : 'false';
+      });
+    });
+  }
+
+  // ========== Dashboard ==========
+  function paintDashboard() {
+    const dash = document.getElementById('dashboard');
+    if (!dash) return;
+    const fullModules = ['toolkit', 'smoking'];
+    const lines = fullModules.map(m => {
+      const state = getModuleState(m);
+      const pct = modulePct(state);
+      const score = state.score == null ? '—' : `${state.score.correct}/${state.score.total}`;
+      const label = m === 'toolkit' ? 'Behaviour change toolkit' : 'Smoking cessation';
+      return `<div class="progress" style="margin:6px 0">
+        <span style="min-width:9em">${label}</span>
+        <div class="progress-bar"><span style="width:${pct}%"></span></div>
+        <span>${pct}% · test ${score}</span>
+      </div>`;
+    });
+    // Summary topics (no module yet)
+    ['falls','weight','mental-health'].forEach(m => {
+      const labels = { falls: 'Falls', weight: 'Healthy weight', 'mental-health': 'Mental health' };
+      const reviewed = getSummaryState(m).reviewed;
+      lines.push(`<div class="progress" style="margin:6px 0">
+        <span style="min-width:9em">${labels[m]}</span>
+        <div class="progress-bar"><span style="width:${reviewed ? 100 : 0}%"></span></div>
+        <span>${reviewed ? 'reviewed' : 'summary only'}</span>
+      </div>`);
+    });
+    // Risk acknowledgement
+    const acked = sget('risk.acked');
+    const ackLine = acked
+      ? `<div class="callout ok" style="margin-top:10px"><strong>Risk &amp; escalation</strong> read on ${new Date(Number(acked)).toLocaleDateString('en-GB')}.</div>`
+      : `<div class="callout danger" style="margin-top:10px"><strong>Risk &amp; escalation</strong> not yet read — <a href="#risk" data-nav>open it now</a>.</div>`;
+    // Flashcards due
+    const due = countDueFlashcards();
+    const fcLine = due > 0
+      ? `<div class="callout info" style="margin-top:10px"><strong>${due}</strong> flashcard${due===1?'':'s'} due for review · <a href="#flashcards" data-nav>review now</a>.</div>`
+      : '';
+    dash.innerHTML = lines.join('') + ackLine + fcLine;
+    // Re-bind nav inside dashboard
+    dash.querySelectorAll('[data-nav]').forEach(a => { /* hash will fire showPage */ });
+    // Update tile badges
+    ['toolkit','smoking'].forEach(m => {
+      const badge = document.querySelector(`[data-mod-badge="${m}"]`);
+      if (!badge) return;
+      const pct = modulePct(getModuleState(m));
+      if (pct === 100) { badge.textContent = 'Complete'; badge.classList.add('full'); badge.classList.remove('partial'); }
+      else if (pct > 0) { badge.textContent = pct + '%'; badge.classList.add('partial'); badge.classList.remove('full'); }
+      else { badge.textContent = 'Module'; badge.classList.remove('full','partial'); }
+    });
+    ['falls','weight','mental-health'].forEach(m => {
+      const badge = document.querySelector(`[data-summary-badge="${m}"]`);
+      if (!badge) return;
+      const reviewed = getSummaryState(m).reviewed;
+      badge.textContent = reviewed ? 'Reviewed' : 'Summary';
+      badge.classList.toggle('full', reviewed);
+      badge.classList.toggle('partial', !reviewed);
+    });
+  }
+
+  // ========== MCQ rendering ==========
+  document.querySelectorAll('[data-quiz]').forEach(host => {
+    const modId = host.dataset.quiz;
+    let questions;
+    try { questions = readJsonConfig(host, 'questions'); } catch (e) {
+      host.innerHTML = '<div class="callout danger"><strong>Quiz unavailable.</strong> This section did not load correctly in this browser copy.</div>';
+      return;
+    }
+    host.innerHTML = '';
+    questions.forEach((qq, qi) => {
+      const card = document.createElement('div');
+      card.className = 'mcq';
+      card.dataset.qi = qi;
+      card.innerHTML = `
+        <div class="stem">Q${qi+1}. ${qq.stem}</div>
+        <ul class="options"></ul>
+        <div class="rationale"></div>
+      `;
+      const ulist = card.querySelector('.options');
+      const rat = card.querySelector('.rationale');
+      qq.options.forEach((opt, oi) => {
+        const li = document.createElement('li');
+        const btn = document.createElement('button');
+        btn.className = 'opt';
+        btn.type = 'button';
+        btn.dataset.correct = opt.correct ? 'true' : 'false';
+        btn.dataset.oi = oi;
+        btn.innerHTML = String.fromCharCode(65 + oi) + '. ' + opt.label;
+        li.appendChild(btn);
+        ulist.appendChild(li);
+        btn.addEventListener('click', () => {
+          if (card.classList.contains('answered')) return;
+          card.querySelectorAll('.opt').forEach(o => o.classList.remove('chosen'));
+          btn.classList.add('chosen');
+          card.classList.add('answered');
+          // Compose rationale that includes all options' explanations
+          const items = qq.options.map((o, i) => {
+            const isChosen = i === oi;
+            const correctness = o.correct ? '<strong>Correct.</strong> ' : '';
+            return `<p style="margin:4px 0"><strong>${String.fromCharCode(65+i)}.</strong> ${isChosen ? '<em>(your answer)</em> ' : ''}${o.why}</p>`;
+          }).join('');
+          rat.innerHTML = items;
+          updateQuizSummary(host, modId, questions);
+        });
+      });
+      host.appendChild(card);
+    });
+    // Summary box
+    const sum = document.createElement('div');
+    sum.className = 'quiz-summary';
+    sum.innerHTML = '<div>Answer all questions to see your score.</div>';
+    host.appendChild(sum);
+    // Reset
+    const resetRow = document.createElement('div');
+    resetRow.className = 'btn-row';
+    resetRow.innerHTML = '<button class="btn secondary" type="button" data-quiz-reset>Reset quiz</button>';
+    host.appendChild(resetRow);
+    resetRow.querySelector('[data-quiz-reset]').addEventListener('click', () => {
+      host.querySelectorAll('.mcq').forEach(c => {
+        c.classList.remove('answered');
+        c.querySelectorAll('.opt').forEach(o => o.classList.remove('chosen'));
+        c.querySelector('.rationale').innerHTML = '';
+      });
+      sum.innerHTML = '<div>Answer all questions to see your score.</div>';
+      const state = getModuleState(modId);
+      state.score = null;
+      setModuleState(modId, state);
+      paintModuleProgress(modId);
+    });
+  });
+
+  function updateQuizSummary(host, modId, questions) {
+    const cards = host.querySelectorAll('.mcq');
+    const answered = Array.from(cards).filter(c => c.classList.contains('answered'));
+    const correct = Array.from(cards).filter(c => {
+      const chosen = c.querySelector('.opt.chosen');
+      return chosen && chosen.dataset.correct === 'true';
+    }).length;
+    const sum = host.querySelector('.quiz-summary');
+    if (answered.length < cards.length) {
+      sum.innerHTML = `<div>${answered.length} / ${cards.length} answered. Keep going.</div>`;
+      return;
+    }
+    sum.innerHTML = `<div class="score">${correct} / ${cards.length}</div>
+      <div>${correct === cards.length ? 'Full marks. Re-test in a week to consolidate.' :
+            correct >= cards.length * 0.8 ? 'Strong. Re-read any wrong answers and re-test in 3 days.' :
+            correct >= cards.length * 0.6 ? 'Solid base. Re-read the Read stage, then re-test.' :
+            'Worth re-reading the Read stage and trying again.'}</div>`;
+    // Save to module state
+    const state = getModuleState(modId);
+    state.score = { correct, total: cards.length, at: Date.now() };
+    setModuleState(modId, state);
+    paintModuleProgress(modId);
+  }
+
+  // ========== Sortable exercises ==========
+  document.querySelectorAll('[data-exercise]').forEach(ex => {
+    const kind = ex.dataset.exercise;
+    if ((!ex.dataset.bins && !ex.dataset.binsId) || (!ex.dataset.items && !ex.dataset.itemsId)) return;
+    let bins, items;
+    try {
+      bins = readJsonConfig(ex, 'bins');
+      items = readJsonConfig(ex, 'items');
+    } catch (e) {
+      if (kind !== 'scenario') ex.innerHTML = '<div class="callout danger"><strong>Exercise unavailable.</strong> This activity did not load correctly in this browser copy.</div>';
+      return;
+    }
+    ex.innerHTML = '';
+    items.forEach((it, ii) => {
+      const card = document.createElement('div');
+      card.className = 'sort-item';
+      card.dataset.answer = it.answer;
+      card.innerHTML = `
+        <div>${it.text}</div>
+        <div class="pick"></div>
+        <div class="feedback"></div>
+      `;
+      const pick = card.querySelector('.pick');
+      const fb = card.querySelector('.feedback');
+      bins.forEach(b => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'btn secondary pick-bin';
+        btn.dataset.bin = b.id;
+        btn.textContent = b.label;
+        btn.addEventListener('click', () => {
+          if (card.classList.contains('correct') || card.classList.contains('wrong')) return;
+          if (b.id === it.answer) {
+            card.classList.add('correct');
+            fb.innerHTML = '<strong>Right.</strong> ' + it.why;
+          } else {
+            card.classList.add('wrong');
+            const correctBin = bins.find(x => x.id === it.answer);
+            fb.innerHTML = `<strong>Best answer:</strong> ${correctBin ? correctBin.label : it.answer}. ${it.why}`;
+          }
+        });
+        pick.appendChild(btn);
+      });
+      ex.appendChild(card);
+    });
+  });
+
+  // ========== Rephrase reveal ==========
+  document.querySelectorAll('.rephrase .reveal').forEach(b => {
+    b.addEventListener('click', () => b.closest('.rephrase').classList.add('revealed'));
+  });
+
+  // ========== Branching scenario ==========
+  document.querySelectorAll('[data-exercise="scenario"]').forEach(host => {
+    let s; try { s = readJsonConfig(host, 'scenario'); } catch (e) {
+      host.innerHTML = '<div class="callout danger"><strong>Scenario unavailable.</strong> This activity did not load correctly in this browser copy.</div>';
+      return;
+    }
+    host.innerHTML = '';
+    const vig = document.createElement('div');
+    vig.className = 'vignette';
+    vig.textContent = s.vignette;
+    host.appendChild(vig);
+
+    const stepsById = {};
+    s.steps.forEach(step => { stepsById[step.id] = step; });
+    function renderStep(stepId, container) {
+      const step = stepsById[stepId];
+      if (!step) return;
+      const el = document.createElement('div');
+      el.className = 'step';
+      el.dataset.stepId = stepId;
+      const h = document.createElement('h4');
+      h.textContent = step.prompt;
+      el.appendChild(h);
+      step.choices.forEach(ch => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'choice ' + (ch.class || '');
+        btn.textContent = ch.label;
+        btn.addEventListener('click', () => {
+          if (el.classList.contains('locked')) return;
+          el.classList.add('locked');
+          btn.classList.add('chosen');
+          if (ch.feedback) {
+            const fb = document.createElement('div');
+            fb.className = 'feedback';
+            fb.textContent = ch.feedback;
+            el.appendChild(fb);
+          }
+          if (ch.next) {
+            renderStep(ch.next, container);
+          } else if (!ch.next && step.choices.length > 1 && ch.class !== 'preferred') {
+            // Allow retry on wrong choice
+            const retry = document.createElement('button');
+            retry.type = 'button';
+            retry.className = 'btn secondary';
+            retry.textContent = 'Try again';
+            retry.style.marginTop = '8px';
+            retry.addEventListener('click', () => {
+              el.remove();
+              renderStep(stepId, container);
+            });
+            el.appendChild(retry);
+          }
+        });
+        el.appendChild(btn);
+      });
+      container.appendChild(el);
+    }
+    renderStep(s.steps[0].id, host);
+  });
+
+  // ========== Reflection save/copy ==========
+  document.querySelectorAll('[data-reflect]').forEach(t => {
+    const k = 'reflect.' + t.dataset.reflect;
+    const saved = sget(k);
+    if (saved) t.value = saved;
+  });
+  document.querySelectorAll('[data-reflect-save]').forEach(b => {
+    b.addEventListener('click', () => {
+      const modId = b.dataset.reflectSave;
+      document.querySelectorAll(`[data-reflect^="${modId}:"]`).forEach(t => {
+        sset('reflect.' + t.dataset.reflect, t.value);
+      });
+      alert('Saved to this device only.');
+    });
+  });
+  document.querySelectorAll('[data-reflect-copy]').forEach(b => {
+    b.addEventListener('click', async () => {
+      const modId = b.dataset.reflectCopy;
+      const fields = Array.from(document.querySelectorAll(`[data-reflect^="${modId}:"]`));
+      const text = fields.map((t, i) => `${i+1}) ${t.previousElementSibling?.textContent || ''}\n${t.value || '(blank)'}`).join('\n\n');
+      try { await navigator.clipboard.writeText(text); alert('Copied.'); }
+      catch (e) { alert('Copy failed — select and copy manually.'); }
+    });
+  });
+
+  // ========== Risk acknowledgement ==========
+  const ackBtn = document.getElementById('ack-btn');
+  const ackState = document.getElementById('ack-state');
+  function paintAck() {
+    const acked = sget('risk.acked');
+    if (!ackBtn || !ackState) return;
+    if (acked) {
+      ackState.textContent = 'Acknowledged ' + new Date(Number(acked)).toLocaleDateString('en-GB');
+      ackState.classList.add('done');
+      ackBtn.textContent = 'Re-acknowledge';
+    } else {
+      ackState.textContent = 'Not yet acknowledged';
+      ackState.classList.remove('done');
+      ackBtn.textContent = 'I have read this page';
+    }
+  }
+  if (ackBtn) ackBtn.addEventListener('click', () => { sset('risk.acked', String(Date.now())); paintAck(); paintDashboard(); });
+  paintAck();
+
+  // ========== Flashcards (SM-2 lite) ==========
+  const FLASHCARDS = [
+    { id: 'fc01', topic: 'toolkit', q: 'What three steps make up Very Brief Advice?', a: 'Ask, Advise, Act. Ask establishes the behaviour, Advise gives the evidence-based route, Act is the active offer of support — usually a same-day referral.' },
+    { id: 'fc02', topic: 'toolkit', q: 'What does OARS stand for in motivational interviewing?', a: 'Open questions, Affirmations, Reflections, Summaries. The four core micro-skills.' },
+    { id: 'fc03', topic: 'toolkit', q: 'Define the "righting reflex" and the antidote.', a: 'The urge to set someone right by giving advice or solutions too early. Antidote: reflections — mirror what they said before offering anything.' },
+    { id: 'fc04', topic: 'toolkit', q: 'In COM-B, what do C, O and M stand for?', a: 'Capability (physical and psychological), Opportunity (physical and social), Motivation (reflective and automatic). All three must be in place for a behaviour to happen.' },
+    { id: 'fc05', topic: 'toolkit', q: 'Match the stage: "I really should, but evenings are hard."', a: 'Contemplation — ambivalence (change talk + sustain talk). Work the ambivalence; do not push to action.' },
+    { id: 'fc06', topic: 'toolkit', q: 'What does NHS Core20PLUS5 mean?', a: 'Core20 = most deprived 20% of the population (by IMD). PLUS = locally identified groups. 5 = clinical priorities (smoking cessation, severe mental illness, hypertension, chronic respiratory disease, early cancer diagnosis — adults).' },
+    { id: 'fc07', topic: 'toolkit', q: 'How should you handle "sustain talk" in MI?', a: 'Treat it as information about ambivalence. Reflect it; do not argue with it. Arguing entrenches it.' },
+    { id: 'fc08', topic: 'toolkit', q: 'A pre-contemplator says "I don\'t see what the fuss is about." What\'s the right move?', a: 'Plant seeds. Validate the contact. Do not push to action — they are not there yet. Build trust for the next contact.' },
+    { id: 'fc09', topic: 'smoking', q: 'How much more likely is quitting with combination behavioural support + pharmacotherapy vs willpower alone?', a: 'About three times more likely (NICE NG209 / NCSCT).' },
+    { id: 'fc10', topic: 'smoking', q: 'What is "combination NRT"?', a: 'A long-acting form (patch) plus a short-acting form (gum, lozenge, mouth spray, nasal spray, inhalator, mouth strip). More effective than single NRT. First-line in NICE NG209.' },
+    { id: 'fc11', topic: 'smoking', q: 'A pregnant woman keeps smoking despite behavioural support. What is preferred?', a: 'Many UK community services offer NRT and vaping as equal quit-aid options in pregnancy alongside specialist behavioural support — the right choice depends on what the woman feels she can stick with. NRT is licensed; vaping is unlicensed but supported. For NRT, lowest effective dose; intermittent forms often preferred over 24-hr patches. Varenicline and bupropion are NOT used in pregnancy. Refer to specialist maternal stop smoking service.' },
+    { id: 'fc12', topic: 'smoking', q: 'Stopping smoking in someone on clozapine — what is the danger?', a: 'Tobacco smoke (not nicotine) induces CYP1A2. Stopping removes that induction; plasma clozapine rises rapidly and clozapine toxicity can be fatal (seizures, arrhythmias). The prescriber and mental health team MUST be informed before/at the point of stopping so the dose can be reviewed and levels monitored. Olanzapine is similarly affected (less acutely dangerous).' },
+    { id: 'fc13', topic: 'smoking', q: 'Are e-cigarettes recommended by NICE?', a: 'For adult smokers as a quit aid — yes. Not for non-smokers or under-18s. Not a licensed medicine. In pregnancy, many UK community services now offer NRT and vaping as equal quit-aid options alongside specialist behavioural support.' },
+    { id: 'fc14', topic: 'smoking', q: 'A CO reading >10 ppm in someone who says they don\'t smoke — what else should you consider?', a: 'Recent passive exposure, or environmental CO from a faulty domestic appliance. Consider a gas-safety check; can be a safeguarding flag.' },
+    { id: 'fc15', topic: 'smoking', q: 'Why doesn\'t cutting down halve the harm of smoking?', a: 'Compensatory smoking — smokers often inhale more deeply or smoke each cigarette more thoroughly. Risk does not fall in proportion to count.' },
+    { id: 'fc16', topic: 'smoking', q: 'Approximate smoking-related premature mortality for people with severe mental illness?', a: 'Around 15–20 years premature mortality, with smoking the largest single contributor.' },
+    { id: 'fc17', topic: 'risk', q: 'Does asking directly about suicide increase risk?', a: 'No. The evidence is consistent: asking does not increase suicidal thoughts or behaviour and may help. Avoidance increases risk.' },
+    { id: 'fc18', topic: 'risk', q: 'Strongest single risk factor for future suicide?', a: 'Previous suicide attempt.' },
+    { id: 'fc19', topic: 'risk', q: 'NICE NG225 position on risk-stratification scores for self-harm?', a: 'Advises against using them to predict future self-harm or to gate access to care. Use a needs-based assessment instead.' },
+    { id: 'fc20', topic: 'risk', q: 'Mental Capacity Act — five principles?', a: '1) Presume capacity. 2) Help the person decide before concluding they can\'t. 3) Unwise decisions are allowed. 4) Best interests for those lacking capacity. 5) Least restrictive option.' },
+    { id: 'fc21', topic: 'smoking', q: 'Varenicline — current UK status?', a: 'Varenicline is available again in the UK from 2024 onwards under generic manufacturers; it is no longer sold under the Champix brand. (Champix was withdrawn in 2021 due to a nitrosamine impurity.) Highly effective; not used in pregnancy or under 18. Always check the current SPC and your formulary.' },
+    { id: 'fc22', topic: 'falls', q: 'Highest-evidence single intervention for falls in older adults?', a: 'Structured strength and balance training (e.g. Otago, FaME). Multifactorial assessment + targeted interventions reduces fall rate; strength/balance is the single biggest piece (NICE / Cochrane).' },
+    { id: 'fc23', topic: 'falls', q: 'Name three medication classes that increase falls risk.', a: 'Sedative/hypnotics (benzodiazepines, Z-drugs), opioids, antihypertensives (especially newly started or up-titrated), anticholinergics, antidepressants. Polypharmacy >4 is itself an independent risk.' },
+    { id: 'fc24', topic: 'falls', q: 'Why ask "what activities have you stopped doing?" in a falls assessment?', a: 'It captures fear-avoidance / activity restriction, which is itself an independent risk factor for further falls and decline. Many older adults under-report falls because they fear losing independence.' },
+    { id: 'fc25', topic: 'falls', q: 'After a fall, what would prompt a low threshold for A&E referral?', a: 'Head injury on anticoagulants; loss of consciousness/collapse (think syncope, not "fall"); suspected fragility fracture; acute confusion (delirium / intracranial bleed / sepsis); frequent falls with new fatigue/breathlessness (cardiac, anaemia).' },
+    { id: 'fc26', topic: 'weight', q: 'BMI thresholds for adults of South Asian, Chinese, other Asian, Middle Eastern, Black African or African-Caribbean family background?', a: 'Overweight from BMI ≥23; obesity from ≥27.5 (NICE CG189, 2023 update). Lower than the standard ≥25 / ≥30 thresholds because of cardiometabolic risk at lower BMI in these populations.' },
+    { id: 'fc27', topic: 'weight', q: 'When does a BMI 32 patient mentioning binge-purge cycles change the plan?', a: 'Pause the weight-management conversation. Screen for an eating disorder. Refer to GP / specialist eating disorder service per NICE NG69. Do NOT enrol in a standard weight-management programme — it can be harmful.' },
+    { id: 'fc28', topic: 'weight', q: 'Waist-to-height ratio rule of thumb?', a: 'Aim for waist circumference under half of height (ratio <0.5: "keep your waist to less than half your height"). Useful as a complementary marker to BMI, especially for BMI 25–34.9.' },
+    { id: 'fc29', topic: 'mental-health', q: 'A client discloses thoughts of ending their life with no specific plan. Minimum next steps?', a: 'Stay calm, stay with them. Don\'t promise confidentiality you can\'t keep. Ask about plan, means, access, what\'s stopped them. Escalate to your supervisor / mental health crisis line (111 option 2) / GP same-day. Document in their words. Agree a follow-up. Never leave with no next step.' },
+    { id: 'fc30', topic: 'mental-health', q: 'Why does NICE NG225 advise against risk-stratification scores for self-harm?', a: 'They have poor predictive value and can be used to gate access to care. NG225 prioritises a needs-based assessment over risk scoring.' },
+    { id: 'fc31', topic: 'risk', q: 'Section 42 of the Care Act 2014 — three criteria for safeguarding adult enquiry?', a: 'The adult (a) has needs for care and support, (b) is experiencing or at risk of abuse or neglect, AND (c) as a result of those needs is unable to protect themselves. All three must apply.' },
+    { id: 'fc32', topic: 'risk', q: 'SBAR — what does each letter stand for in an escalation call?', a: 'Situation (who you are, where, who the patient is, why calling); Background (relevant history, current presentation); Assessment (what you think is going on, what you\'ve done); Recommendation (what you need from them, by when).' }
+  ];
+
+  // SM-2 lite: store {due: timestamp, ease: number, n: 0}
+  function fcKey(id) { return 'fc.' + id; }
+  function getFC(id) {
+    return sjget(fcKey(id)) || { due: 0, ease: 2.5, n: 0 };
+  }
+  function setFC(id, st) { sjset(fcKey(id), st); }
+
+  function isDue(state) { return Date.now() >= state.due; }
+  function countDueFlashcards() {
+    return FLASHCARDS.filter(c => isDue(getFC(c.id))).length;
+  }
+  function updateFC(id, rating) {
+    // rating: 0 (again), 1 (hard), 2 (good), 3 (easy)
+    const st = getFC(id);
+    if (rating === 0) {
+      st.n = 0;
+      st.due = Date.now() + 10 * 60 * 1000; // 10 min
+      st.ease = Math.max(1.3, st.ease - 0.2);
+    } else {
+      st.n = (st.n || 0) + 1;
+      let interval;
+      if (st.n === 1) interval = 1;
+      else if (st.n === 2) interval = 3;
+      else interval = Math.round((st.last_interval || 3) * st.ease);
+      if (rating === 1) { interval = Math.max(1, Math.round(interval * 0.6)); st.ease = Math.max(1.3, st.ease - 0.15); }
+      if (rating === 3) { st.ease += 0.15; }
+      st.last_interval = interval;
+      st.due = Date.now() + interval * 24 * 60 * 60 * 1000;
+    }
+    setFC(id, st);
+  }
+
+  function paintFlashcards() {
+    const dueEl = document.getElementById('fc-due');
+    const area = document.getElementById('fc-area');
+    if (!area) return;
+    const due = FLASHCARDS.filter(c => isDue(getFC(c.id)));
+    if (due.length === 0) {
+      dueEl.innerHTML = '<strong>No cards due.</strong> Come back later — or reset spacing below to practise again now.';
+      area.innerHTML = '';
+      return;
+    }
+    dueEl.innerHTML = `<strong>${due.length}</strong> card${due.length===1?'':'s'} due. Tap to flip; then rate honestly.`;
+    // Show one card at a time
+    const card = due[0];
+    area.innerHTML = `
+      <div class="flashcard" id="fc-card">
+        <div class="small" style="color: var(--ink-muted)">Topic: ${card.topic}</div>
+        <div class="front"><strong>Q.</strong> ${card.q}</div>
+        <div class="back"><strong>A.</strong> ${card.a}</div>
+      </div>
+      <div class="fc-controls" id="fc-rate" hidden>
+        <button class="btn danger" data-r="0">Again</button>
+        <button class="btn secondary" data-r="1">Hard</button>
+        <button class="btn" data-r="2">Good</button>
+        <button class="btn ok" data-r="3">Easy</button>
+      </div>
+    `;
+    const fcCard = document.getElementById('fc-card');
+    const fcRate = document.getElementById('fc-rate');
+    fcCard.addEventListener('click', () => {
+      fcCard.classList.add('flipped');
+      fcRate.hidden = false;
+    });
+    fcRate.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+      updateFC(card.id, Number(b.dataset.r));
+      paintFlashcards();
+    }));
+  }
+
+  document.getElementById('fc-reset')?.addEventListener('click', () => {
+    if (!confirm('Reset all card spacing? All cards will be due again.')) return;
+    FLASHCARDS.forEach(c => srem('fc.' + c.id));
+    paintFlashcards();
+  });
+
+  // ========== Feedback / Report-a-correction ==========
+  function buildFeedbackEmail() {
+    const page = (document.getElementById('fb-page')?.value || '').trim();
+    const issue = (document.getElementById('fb-issue')?.value || '').trim();
+    const source = (document.getElementById('fb-source')?.value || '').trim();
+    const name = (document.getElementById('fb-name')?.value || '').trim();
+    const subject = `${CONFIG.FEEDBACK_SUBJECT_PREFIX} ${page || 'general'}`.slice(0, 200);
+    const lines = [
+      `Page / section: ${page || '(not specified)'}`,
+      ``,
+      `Issue:`,
+      issue || '(none entered)',
+      ``,
+      `Source / evidence:`,
+      source || '(none provided)',
+      ``,
+      `From: ${name || '(anonymous)'}`,
+      ``,
+      `— Sent from Placement Companion`
+    ];
+    return { subject, body: lines.join('\n') };
+  }
+  const feedbackEmailConfigured = !!(CONFIG.FEEDBACK_EMAIL || '').trim();
+  if (!feedbackEmailConfigured) {
+    const sendBtn = document.getElementById('fb-send');
+    if (sendBtn) {
+      sendBtn.disabled = true;
+      sendBtn.textContent = 'Email sending not configured';
+    }
+    const copyBtn = document.getElementById('fb-copy');
+    if (copyBtn) copyBtn.textContent = 'Copy feedback text';
+  }
+  document.getElementById('fb-send')?.addEventListener('click', () => {
+    const issue = (document.getElementById('fb-issue')?.value || '').trim();
+    if (!issue) { alert('Please describe the issue first.'); return; }
+    if (!feedbackEmailConfigured) { alert('No feedback email is configured in this local copy. Use "Copy feedback text" instead.'); return; }
+    const { subject, body } = buildFeedbackEmail();
+    const url = `mailto:${encodeURIComponent(CONFIG.FEEDBACK_EMAIL)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = url;
+  });
+  document.getElementById('fb-copy')?.addEventListener('click', async () => {
+    const issue = (document.getElementById('fb-issue')?.value || '').trim();
+    if (!issue) { alert('Please describe the issue first.'); return; }
+    const { subject, body } = buildFeedbackEmail();
+    const header = feedbackEmailConfigured
+      ? `To: ${CONFIG.FEEDBACK_EMAIL}`
+      : 'To: add your educator email before sending';
+    const text = `${header}\nSubject: ${subject}\n\n${body}`;
+    try { await navigator.clipboard.writeText(text); alert('Copied. Paste into your email or message app.'); }
+    catch (e) { alert('Copy failed — select the text manually below:\n\n' + text); }
+  });
+
+  // Auto-fill the feedback "page" field if user arrived from a "Report this page" link
+  function maybePrefillFeedbackPage() {
+    const last = sessionStorage.getItem('pc.lastpage');
+    const fbPage = document.getElementById('fb-page');
+    if (last && fbPage && !fbPage.value) {
+      fbPage.value = last;
+    }
+  }
+
+  // Track the last "real" page the user was on, so the Report link can prefill
+  function trackLastPage(id) {
+    if (!id || id === 'feedback' || id === 'sources') return;
+    const title = document.querySelector('#' + id + ' h1')?.textContent || id;
+    sessionStorage.setItem('pc.lastpage', title);
+  }
+
+  document.querySelectorAll('[data-summary-review]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.summaryReview;
+      setSummaryState(id, { reviewed: true, at: Date.now() });
+      btn.textContent = 'Summary reviewed';
+      btn.disabled = true;
+      paintDashboard();
+    });
+    if (getSummaryState(btn.dataset.summaryReview).reviewed) {
+      btn.textContent = 'Summary reviewed';
+      btn.disabled = true;
+    }
+  });
+
+  function resetLearnerProgress() {
+    const ok = confirm('Reset all learner progress, quiz scores, flashcards, reflections and summary review marks stored in this browser on this device?');
+    if (!ok) return false;
+    Object.keys(localStorage)
+      .filter(k => k.startsWith(STORAGE_PREFIX))
+      .forEach(k => localStorage.removeItem(k));
+    sessionStorage.removeItem('pc.lastpage');
+    document.getElementById('clear-local-data-status').textContent = 'All learner progress and review marks were reset for this browser on this device.';
+    paintAck();
+    paintDashboard();
+    paintFlashcards();
+    location.hash = '#home';
+    showPage('home');
+    return true;
+  }
+
+  document.getElementById('clear-local-data')?.addEventListener('click', resetLearnerProgress);
+  document.getElementById('clear-local-data-home')?.addEventListener('click', resetLearnerProgress);
+
+  document.getElementById('print-workbook')?.addEventListener('click', () => {
+    window.open('workbook.html', '_blank');
+  });
+  document.getElementById('print-workbook-home')?.addEventListener('click', () => {
+    window.open('workbook.html', '_blank');
+  });
+
+  // ========== Init ==========
+  ['toolkit','smoking'].forEach(paintModuleProgress);
+  showPage(currentId());
+})();
+</script>
+</body>
+</html>
